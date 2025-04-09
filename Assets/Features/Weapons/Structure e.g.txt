@@ -1,0 +1,41 @@
+Assets/
+├── Features/
+│   └── Weapons/
+│       ├── Scripts/                <- Weapon and accessory logic
+│       │   ├── WeaponBase.cs        <- Base class for all weapons
+│       │   ├── Gun.cs               <- Specific logic for firearms (AK47, M4, etc.)
+│       │   ├── Pistol.cs            <- Specific logic for pistols
+│       │   ├── MeleeWeapon.cs       <- For melee weapons, if you have any
+│       │   ├── AmmoSystem.cs        <- Ammo management
+│       │   ├── AttachmentSystem.cs  <- Management of attachable accessories
+│       │   └── WeaponAttachment.cs  <- Base class for accessories
+│       │
+│       ├── Prefabs/                <- Weapon, accessory, and configuration prefabs
+│       │   ├── Rifles/              <- Rifles
+│       │   │   ├── AK47.prefab      <- Specific prefab for AK47
+│       │   │   ├── M4A1.prefab      <- Specific prefab for M4
+│       │   │   └── [Other Rifles]  
+│       │   ├── Pistols/             <- Pistols
+│       │   │   ├── Glock.prefab     <- Glock prefab
+│       │   │   └── [Other Pistols] 
+│       │   ├── Attachments/         <- Common accessories
+│       │   │   ├── Silencer.prefab  <- Silencer compatible with multiple weapons
+│       │   │   ├── Scope.prefab     <- Scope compatible with multiple weapons
+│       │   │   └── Grip.prefab
+│       │   └── WeaponHandler.prefab <- Generic handler for weapon switching
+│       │
+│       ├── ScriptableObjects/      <- Specific configurations for weapons and accessories
+│       │   ├── WeaponData.asset     <- Generic weapon data (caliber, damage, rate of fire)
+│       │   ├── AttachmentData.asset <- Accessory data (effects, compatibility, bonuses)
+│       │   ├── AmmoData.asset       <- Ammo information
+│       │   └── WeaponVariantData.asset <- For weapon variants (AK47 with different options)
+│       │
+│       ├── VFX/                    <- Visual effects for weapons
+│       │   ├── MuzzleFlash.prefab
+│       │   ├── BulletImpact.prefab
+│       │   └── BloodSplat.prefab
+│       │
+│       └── Audio/                  <- Weapon sounds
+│           ├── Gunshot/
+│           ├── Reload/
+│           └── [Others]
