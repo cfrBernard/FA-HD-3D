@@ -6,11 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Project/Scenes/Loading/PrebootScene.unity
+    guid: f3cca1a1c03d6f14f9826f12b8fb0147
+  - enabled: 1
+    path: Assets/Project/Scenes/Loading/BootScene.unity
+    guid: bd4004f2e499ada44a289a52ceac9e96
+  - enabled: 1
     path: Assets/Project/Scenes/MainMenu/MainMenu.unity
     guid: 42d8d28a5fae5c24f845f0acdd27ec08
   - enabled: 1
     path: Assets/Project/Scenes/SettingsMenu/SettingsMenu.unity
     guid: b96c6cd6aebc7d044a46a461f658df7c
+  - enabled: 1
+    path: Assets/Project/Scenes/Loading/LoadingScene.unity
+    guid: 0e6579e55c6b9534eae5c6387f1df74a
+  - enabled: 1
+    path: Assets/Project/Scenes/Levels/GameplayScene.unity
+    guid: df727561d09d35b4a8f2bfe3a40f4ee3
   - enabled: 0
     path: Assets/Project/Scenes/TestScenes/TestScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
