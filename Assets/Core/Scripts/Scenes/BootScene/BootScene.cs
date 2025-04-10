@@ -19,6 +19,7 @@ public class BootScene : MonoBehaviour
     private SceneManager sceneManager;
     private SettingsManager settingsManager;
     private InputManager inputManager;
+    private FPSDisplay _FPSDisplay;
 
     #region BootSequence
     private void Start()
@@ -44,8 +45,8 @@ public class BootScene : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f); 
         UpdateProgressBar();
-        yield return StartCoroutine(FadeInRoutine());
         
+        yield return StartCoroutine(FadeInRoutine());
         yield return StartCoroutine(LoadMainMenuAsync());
     }
 
@@ -82,6 +83,14 @@ public class BootScene : MonoBehaviour
         }
         else
             inputManager = InputManager.Instance;
+
+        if (FPSDisplay.Instance == null)
+        {
+            _FPSDisplay = new GameObject("_FPSDisplay").AddComponent<FPSDisplay>();
+            DontDestroyOnLoad(_FPSDisplay.gameObject);
+        }
+        else
+            _FPSDisplay = FPSDisplay.Instance;
     }
 
     // IEnumerator LoadPlayerPrefs() {}
