@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
-        SceneManager.LoadScene("SettingsMenu", LoadSceneMode.Additive);
+        // 
         Debug.Log("SETTINGS");
     }
 
