@@ -19,6 +19,8 @@ public class BootScene : MonoBehaviour
     private SceneManager sceneManager;
     private SettingsManager settingsManager;
     private InputManager inputManager;
+    private UIManager _UIManager;
+    private EventManager eventManager;
     private ToolsManager toolsManager;
     private FPSDisplay _FPSDisplay;
     
@@ -86,6 +88,22 @@ public class BootScene : MonoBehaviour
         else
             inputManager = InputManager.Instance;
 
+        if (UIManager.Instance == null)
+        {
+            _UIManager = new GameObject("UIManager").AddComponent<UIManager>();
+            DontDestroyOnLoad(_UIManager.gameObject);
+        }
+        else
+            _UIManager = UIManager.Instance;
+
+        if (EventManager.Instance == null)
+        {
+            eventManager = new GameObject("EventManager").AddComponent<EventManager>();
+            DontDestroyOnLoad(eventManager.gameObject);
+        }
+        else
+            eventManager = EventManager.Instance;
+
         if (ToolsManager.Instance == null)
         { 
             toolsManager = new GameObject("toolsManager").AddComponent<ToolsManager>();
@@ -113,9 +131,7 @@ public class BootScene : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         
-        AsyncOperation operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainMenu");
-        
-        yield return operation;
+        GameManager.Instance.SetGameState(GameState.MainMenu);
         Debug.Log("MainMenu loaded!");
     }
     #endregion
