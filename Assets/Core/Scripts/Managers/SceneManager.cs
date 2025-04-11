@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 using System.Collections;
 
 public class SceneManager : MonoBehaviour
 {
     public static SceneManager Instance { get; private set; }
+
+    public static event Action<string> OnSceneLoaded;
 
     private void Awake()
     {
@@ -21,12 +24,35 @@ public class SceneManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        if (IsSceneLoaded(sceneName))
+        {
+            Debug.LogWarning($"[SceneManager] Scene '{sceneName}' is already loaded.");
+            return;
+        }
+
         StartCoroutine(LoadSceneAsync(sceneName, false));
     }
 
     public void LoadAdditiveScene(string sceneName)
     {
+        if (IsSceneLoaded(sceneName))
+        {
+            Debug.LogWarning($"[SceneManager] Scene '{sceneName}' is already loaded additively.");
+            return;
+        }
+
         StartCoroutine(LoadSceneAsync(sceneName, true));
+    }
+
+    public void UnloadScene(string sceneName)
+    {
+        if (!IsSceneLoaded(sceneName))
+        {
+            Debug.LogWarning($"[SceneManager] Tried to unload scene '{sceneName}' which isn't loaded.");
+            return;
+        }
+
+        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
     }
 
     private IEnumerator LoadSceneAsync(string sceneName, bool additive)
@@ -34,33 +60,29 @@ public class SceneManager : MonoBehaviour
         AsyncOperation operation;
 
         if (additive)
-        {
-            
-            // Loading the scene additively
             operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        }
         else
-        {
-            // Classic loading of a new scene
             operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-        }
 
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f); 
-            Debug.Log("Loading Progress: " + progress * 100 + "%");
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            Debug.Log($"[SceneManager] Loading '{sceneName}'... {progress * 100:F0}%");
             yield return null;
         }
 
-        if (!additive)
-        {
-            // fade-in/out or other effects
-            Debug.Log("Scene " + sceneName + " Loaded!");
-        }
+        Debug.Log($"[SceneManager] Scene '{sceneName}' loaded successfully.");
+        OnSceneLoaded?.Invoke(sceneName);
     }
 
-    public void UnloadScene(string sceneName)
+    private bool IsSceneLoaded(string sceneName)
     {
-        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
+        for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+        {
+            var scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
+            if (scene.name == sceneName)
+                return true;
+        }
+        return false;
     }
 }

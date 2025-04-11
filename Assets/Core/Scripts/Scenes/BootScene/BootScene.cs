@@ -19,7 +19,10 @@ public class BootScene : MonoBehaviour
     private SceneManager sceneManager;
     private SettingsManager settingsManager;
     private InputManager inputManager;
-    private DevConsole devConsole;
+    private UIManager _UIManager;
+    private EventManager eventManager;
+    private AudioManager audioManager;
+    private ToolsManager toolsManager;
     private FPSDisplay _FPSDisplay;
     
 
@@ -86,13 +89,37 @@ public class BootScene : MonoBehaviour
         else
             inputManager = InputManager.Instance;
 
-        if (DevConsole.Instance == null)
+        if (UIManager.Instance == null)
+        {
+            _UIManager = new GameObject("UIManager").AddComponent<UIManager>();
+            DontDestroyOnLoad(_UIManager.gameObject);
+        }
+        else
+            _UIManager = UIManager.Instance;
+
+        if (EventManager.Instance == null)
+        {
+            eventManager = new GameObject("EventManager").AddComponent<EventManager>();
+            DontDestroyOnLoad(eventManager.gameObject);
+        }
+        else
+            eventManager = EventManager.Instance;
+
+        if (AudioManager.Instance == null)
+        {
+            audioManager = new GameObject("AudioManager").AddComponent<AudioManager>();
+            DontDestroyOnLoad(audioManager.gameObject);
+        }
+        else
+            audioManager = AudioManager.Instance;
+
+        if (ToolsManager.Instance == null)
         { 
-            devConsole = new GameObject("devConsole").AddComponent<DevConsole>();
-            DontDestroyOnLoad(devConsole.gameObject);
+            toolsManager = new GameObject("toolsManager").AddComponent<ToolsManager>();
+            DontDestroyOnLoad(toolsManager.gameObject);
         }
         else 
-            devConsole = DevConsole.Instance;
+            toolsManager = ToolsManager.Instance;
 
         if (FPSDisplay.Instance == null)
         {
@@ -113,10 +140,7 @@ public class BootScene : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         
-        AsyncOperation operation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainMenu");
-        
-        yield return operation;
-        Debug.Log("MainMenu loaded!");
+        GameManager.Instance.SetGameState(GameState.MainMenu);
     }
     #endregion
 

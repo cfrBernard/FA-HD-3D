@@ -6,6 +6,7 @@ public class PrebootLoader : MonoBehaviour
     IEnumerator Start()
     {
         yield return null;
-        SceneManager.Instance.LoadScene("BootScene");
+        GameManager.Instance.SetGameState(GameState.Boot);
+        SceneManager.Instance.LoadScene(SceneNames.Boot);
     }
 }
