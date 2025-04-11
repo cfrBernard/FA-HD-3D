@@ -21,6 +21,7 @@ public class BootScene : MonoBehaviour
     private InputManager inputManager;
     private UIManager _UIManager;
     private EventManager eventManager;
+    private AudioManager audioManager;
     private ToolsManager toolsManager;
     private FPSDisplay _FPSDisplay;
     
@@ -104,6 +105,14 @@ public class BootScene : MonoBehaviour
         else
             eventManager = EventManager.Instance;
 
+        if (AudioManager.Instance == null)
+        {
+            audioManager = new GameObject("AudioManager").AddComponent<AudioManager>();
+            DontDestroyOnLoad(audioManager.gameObject);
+        }
+        else
+            audioManager = AudioManager.Instance;
+
         if (ToolsManager.Instance == null)
         { 
             toolsManager = new GameObject("toolsManager").AddComponent<ToolsManager>();
@@ -132,7 +141,6 @@ public class BootScene : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         
         GameManager.Instance.SetGameState(GameState.MainMenu);
-        Debug.Log("MainMenu loaded!");
     }
     #endregion
 
