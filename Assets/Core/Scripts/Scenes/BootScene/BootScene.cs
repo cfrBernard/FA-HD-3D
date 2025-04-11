@@ -19,7 +19,7 @@ public class BootScene : MonoBehaviour
     private SceneManager sceneManager;
     private SettingsManager settingsManager;
     private InputManager inputManager;
-    private DevConsole devConsole;
+    private ToolsManager toolsManager;
     private FPSDisplay _FPSDisplay;
     
 
@@ -86,13 +86,13 @@ public class BootScene : MonoBehaviour
         else
             inputManager = InputManager.Instance;
 
-        if (DevConsole.Instance == null)
+        if (ToolsManager.Instance == null)
         { 
-            devConsole = new GameObject("devConsole").AddComponent<DevConsole>();
-            DontDestroyOnLoad(devConsole.gameObject);
+            toolsManager = new GameObject("toolsManager").AddComponent<ToolsManager>();
+            DontDestroyOnLoad(toolsManager.gameObject);
         }
         else 
-            devConsole = DevConsole.Instance;
+            toolsManager = ToolsManager.Instance;
 
         if (FPSDisplay.Instance == null)
         {
