@@ -5,13 +5,13 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         Debug.Log("START");
-        SceneManager.Instance.LoadScene("GameplayScene");
+        GameManager.Instance.SetGameState(GameState.Playing);
     }
 
     public void OpenSettings()
     {
         Debug.Log("SETTINGS");
-        SceneManager.Instance.LoadAdditiveScene("SettingsMenu");
+        GameManager.Instance.SetGameState(GameState.Settings);
     }
 
     public void ExitGame()
