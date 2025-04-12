@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.Instance.LoadScene(SceneNames.MainMenu);
                 break;
             case GameState.Playing:
-                SceneManager.Instance.LoadScene(SceneNames.Game);
+                SceneManager.Instance.LoadSceneWithLoading(SceneNames.Game);
                 break;
             case GameState.Settings:
                 SceneManager.Instance.LoadAdditiveScene(SceneNames.SettingsMenu);

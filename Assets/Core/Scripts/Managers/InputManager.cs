@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
+    private InputActionAsset inputActions;
 
     private void Awake()
     {
@@ -15,5 +17,7 @@ public class InputManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        inputActions = GlobalConfigs.Input.inputActions;
     }
 }

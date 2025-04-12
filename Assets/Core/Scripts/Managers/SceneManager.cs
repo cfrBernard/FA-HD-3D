@@ -6,8 +6,9 @@ using System.Collections;
 public class SceneManager : MonoBehaviour
 {
     public static SceneManager Instance { get; private set; }
-
     public static event Action<string> OnSceneLoaded;
+
+    private string sceneToLoadAfterLoading;
 
     private void Awake()
     {
@@ -33,6 +34,17 @@ public class SceneManager : MonoBehaviour
         StartCoroutine(LoadSceneAsync(sceneName, false));
     }
 
+    public void LoadSceneWithLoading(string targetSceneName)
+    {
+        sceneToLoadAfterLoading = targetSceneName;
+        StartCoroutine(LoadSceneAsync("LoadingScene", false));
+    }
+
+    public string GetTargetSceneToLoad()
+    {
+        return sceneToLoadAfterLoading;
+    }
+
     public void LoadAdditiveScene(string sceneName)
     {
         if (IsSceneLoaded(sceneName))
@@ -55,7 +67,7 @@ public class SceneManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
     }
 
-    private IEnumerator LoadSceneAsync(string sceneName, bool additive)
+    public IEnumerator LoadSceneAsync(string sceneName, bool additive)
     {
         AsyncOperation operation;
 
