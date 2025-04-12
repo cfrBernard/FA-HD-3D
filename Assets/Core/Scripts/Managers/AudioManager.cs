@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
+
+    private AudioMixer audioMixer;
 
     private void Awake()
     {
@@ -15,5 +18,7 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        audioMixer = GlobalConfigs.Audio.mainMixer;
     }
 }
