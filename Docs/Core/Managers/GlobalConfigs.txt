@@ -1,0 +1,46 @@
+# 📚 GlobalConfig: Centralized Management of ScriptableObjects
+
+## 🧠 Why this system?
+Centralize access to ScriptableObjects (SO) in a single access point.
+Use SOs in Singletons/Managers (such as InputManager, AudioManager) for easy and clean access.
+
+## 🔧 How does it work?
+1. SOs are placed in the Resources/GlobalConfigsSO folder (e.g., InputConfig, AudioConfig).
+
+2. GlobalConfigs.cs centralizes the loading of these SOs:
+    - Each SO is loaded on demand via Resources.Load<T>().
+    - Easy access via GlobalConfigs.Input, GlobalConfigs.Audio, etc.
+
+3. Access in a manager or singleton:
+You access an SO directly from GlobalConfigs:
+
+inputActions = GlobalConfigs.Input.inputActions;
+
+4. Scalability:
+If you add a new SO, just add a line in GlobalConfigs.cs to load it. Example for a VideoConfig:
+
+public static VideoConfig Video => _videoConfig ??= Load<VideoConfig>("VideoConfig");
+
+## 📂 Project Structure
+
+/Assets
+    
+    /Core
+        /ScriptableObjects
+            InputConfig.cs
+            AudioConfig.cs
+        /Managers
+            GlobalConfigs.cs        <-- Manages the loading of all SOs
+        ...
+    
+    /Resources
+        /GlobalConfigsSO
+            InputConfig.asset
+            AudioConfig.asset
+        ...
+
+## ⚡ Advantages
+- Centralized access: All logic for managing SOs is in GlobalConfigs.cs.
+- No manual dependencies in the inspector.
+- Easy access for Managers/Singletons.
+- Modular: Add new SOs by only modifying GlobalConfigs.cs.
