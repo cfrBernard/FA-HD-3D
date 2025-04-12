@@ -1,41 +1,26 @@
 using UnityEngine;
 using System.Collections;
 
-public class MainMenu : MonoBehaviour
+public class LoadingBootstrap : MonoBehaviour
 {
     public CanvasGroup fadeCanvasGroup;
     public float fadeDuration = 1f;
 
     private void Start()
     {
-        fadeCanvasGroup.gameObject.SetActive(true);
-        StartCoroutine(FadeIn());
+        StartCoroutine(LoadTargetScene());
     }
 
-    public void PlayGame()
+    private IEnumerator LoadTargetScene()
     {
-        StartCoroutine(TransitionToLoadingScene());
-    }
-
-    public void OpenSettings()
-    {
-        UIManager.Instance.OnOpenSettings();
-    }
-
-    public void ExitGame()
-    {
-        UIManager.Instance.OnExitGame();
-    }
-
-    private IEnumerator TransitionToLoadingScene()
-    {
-        fadeCanvasGroup.gameObject.SetActive(true);
-        
         yield return FadeOut();
+        yield return new WaitForSeconds(0.5f);
+        string target = SceneManager.Instance.GetTargetSceneToLoad();
+        yield return SceneManager.Instance.LoadSceneAsync(target, true);
+        yield return FadeIn();
+        yield return new WaitForSeconds(0.5f);
 
-        yield return new WaitForSeconds(1f);
-
-        UIManager.Instance.OnPlayGame();
+        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("LoadingScene");
     }
 
     private IEnumerator FadeOut()
@@ -60,6 +45,5 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
         fadeCanvasGroup.alpha = 0;
-        fadeCanvasGroup.gameObject.SetActive(false);
     }
 }

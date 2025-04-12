@@ -58,4 +58,22 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
+
+    public void OnPlayGame()
+    {
+        Debug.Log("START");
+        GameManager.Instance.SetGameState(GameState.Playing);
+    }
+
+    public void OnOpenSettings()
+    {
+        Debug.Log("SETTINGS");
+        GameManager.Instance.SetGameState(GameState.Settings);
+    }
+
+    public void OnExitGame()
+    {
+        Debug.Log("EXIT");
+        Application.Quit();
+    }
 }
