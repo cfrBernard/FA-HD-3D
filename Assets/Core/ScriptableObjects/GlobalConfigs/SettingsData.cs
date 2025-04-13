@@ -5,6 +5,7 @@ public class SettingsData
     public float masterVolume;
     public float musicVolume;
     public float sfxVolume;
+    public float envVolume;
 
     // Video
     public int resolutionIndex;
@@ -24,6 +25,7 @@ public class SettingsData
         masterVolume = config.masterVolume;
         musicVolume = config.musicVolume;
         sfxVolume = config.sfxVolume;
+        envVolume = config.envVolume;
 
         resolutionIndex = config.resolutionIndex;
         fullscreen = config.fullscreen;

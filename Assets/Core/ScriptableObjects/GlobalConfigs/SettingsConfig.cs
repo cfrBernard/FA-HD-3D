@@ -5,8 +5,9 @@ public class SettingsConfig : ScriptableObject
 {
     [Header("Audio")]
     public float masterVolume = 1f;
-    public float musicVolume = 0.7f;
+    public float musicVolume = 1f;
     public float sfxVolume = 1f;
+    public float envVolume = 1f;
 
     [Header("Video")]
     public int resolutionIndex = 0;  // index dans une liste Unity

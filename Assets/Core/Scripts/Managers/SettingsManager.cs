@@ -31,12 +31,14 @@ public class SettingsManager : MonoBehaviour
 
     public void ApplySettings()
     {
-        // AudioManager.Instance?.UpdateVolumes(_data);
+
+        AudioManager.Instance?.UpdateVolumes(_data);
         // InputManager.Instance?.Initialize(_data.inputBindings);
     }
 
     public void Save()
     {
+        Debug.Log("[SettingsManager] Save() called");
         SaveManager.SaveSettings(_data);
     }
 

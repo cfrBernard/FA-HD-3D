@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: SettingsConfig
   m_EditorClassIdentifier: 
   masterVolume: 1
-  musicVolume: 0.7
+  musicVolume: 1
   sfxVolume: 1
+  envVolume: 1
   resolutionIndex: 0
   fullscreen: 1
   targetFramerate: 60
