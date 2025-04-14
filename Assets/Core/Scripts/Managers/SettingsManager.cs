@@ -31,9 +31,8 @@ public class SettingsManager : MonoBehaviour
 
     public void ApplySettings()
     {
-
         AudioManager.Instance?.UpdateVolumes(_data);
-        // InputManager.Instance?.Initialize(_data.inputBindings);
+        InputManager.Instance?.UpdateBindings(_data);
     }
 
     public void Save()
@@ -42,12 +41,12 @@ public class SettingsManager : MonoBehaviour
         SaveManager.SaveSettings(_data);
     }
 
-    public SettingsData GetSettingsData() => _data;
-
     public void ResetToDefault()
     {
         _data.CopyFrom(GlobalConfigs.Settings);
         ApplySettings();
         Save();
     }
+
+    public SettingsData GetSettingsData() => _data;
 }
