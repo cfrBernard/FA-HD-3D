@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5767b7c77749f8f4ca219248262b1105, type: 3}
   m_Name: SettingsConfig
   m_EditorClassIdentifier: 
-  masterVolume: 1
-  musicVolume: 1
-  sfxVolume: 1
-  envVolume: 1
-  resolutionIndex: 0
-  fullscreen: 1
-  targetFramerate: 60
-  vsync: 0
-  invertY: 0
-  sensitivity: 1
+  audio:
+    masterVolume: 1
+    musicVolume: 1
+    sfxVolume: 1
+    envVolume: 1
+  video:
+    resolutionIndex: 0
+    fullscreen: 1
+    targetFramerate: 60
+    vsync: 0
+  gameplay:
+    invertY: 0
+    sensitivity: 1
   defaultInputBindings:
     inputActionOverridesJson: 'Action: Move - Bindings:
 

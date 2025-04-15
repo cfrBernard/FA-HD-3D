@@ -1,65 +1,50 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AudioSettingsUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    public Slider masterVolumeSlider;
-    public Slider musicVolumeSlider;
-    public Slider sfxVolumeSlider;
-    public Slider envVolumeSlider;
+    public SettingsCategory categoryAsset;
+    public Transform contentPanel;
+    public GameObject paramSliderPrefab;
+
+    private SettingsData settingsData;
 
     private void OnEnable()
     {
-        LoadSettings();
+        settingsData = SettingsManager.Instance.GetSettingsData();
+        GenerateUI();
     }
 
-    private void LoadSettings()
+    private void GenerateUI()
     {
-        var settingsData = SettingsManager.Instance.GetSettingsData();
+        foreach (var param in categoryAsset.parameters)
+        {
+            if (param.type == ParamType.Slider)
+            {
+                float currentValue = (float)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
 
-        // loading values
-        masterVolumeSlider.value = settingsData.masterVolume;
-        musicVolumeSlider.value = settingsData.musicVolume;
-        sfxVolumeSlider.value = settingsData.sfxVolume;
-        envVolumeSlider.value = settingsData.envVolume;
 
-        // onValueChanged
-        masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
-        musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
-        sfxVolumeSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
-        envVolumeSlider.onValueChanged.AddListener(OnEnvVolumeChanged);
+                CreateSlider(param, currentValue);
+            }
+            // Toggle, Dropdown
+        }
     }
 
-    public void OnMasterVolumeChanged(float value)
+    private void CreateSlider(ParamDefinition paramDef, float currentValue)
     {
-        var settingsData = SettingsManager.Instance.GetSettingsData();
-        settingsData.masterVolume = value;
+        var go = Instantiate(paramSliderPrefab, contentPanel);
+        var slider = go.GetComponent<ParamSlider>();
+
+        slider.Setup(paramDef.label, currentValue, value =>
+        {
+            ReflectionUtils.SetValueByPath(settingsData, paramDef.key, value);
+            ApplyAndSave();
+        }, paramDef.showDecimal);
+    }
+
+    private void ApplyAndSave()
+    {
         SettingsManager.Instance.Save();
         SettingsManager.Instance.ApplySettings();
-    }
-
-    public void OnMusicVolumeChanged(float value)
-    {
-        var settingsData = SettingsManager.Instance.GetSettingsData();
-        settingsData.musicVolume = value; 
-        SettingsManager.Instance.Save(); 
-        SettingsManager.Instance.ApplySettings(); 
-    }
-
-    public void OnSFXVolumeChanged(float value)
-    {
-        var settingsData = SettingsManager.Instance.GetSettingsData();
-        settingsData.sfxVolume = value;  
-        SettingsManager.Instance.Save(); 
-        SettingsManager.Instance.ApplySettings(); 
-    }
-
-    public void OnEnvVolumeChanged(float value)
-    {
-        var settingsData = SettingsManager.Instance.GetSettingsData();
-        settingsData.envVolume = value;  
-        SettingsManager.Instance.Save(); 
-        SettingsManager.Instance.ApplySettings(); 
     }
 }

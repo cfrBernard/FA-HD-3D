@@ -4,21 +4,11 @@ using UnityEngine;
 public class SettingsConfig : ScriptableObject
 {
     [Header("Audio")]
-    public float masterVolume = 1f;
-    public float musicVolume = 1f;
-    public float sfxVolume = 1f;
-    public float envVolume = 1f;
+    public AudioSettings audio = new AudioSettings();
 
     [Header("Video")]
-    public int resolutionIndex = 0;  // index dans une liste Unity
-    public bool fullscreen = true;
-    public int targetFramerate = 60;
-    public bool vsync = false;
+    public VideoSettings video = new VideoSettings();
 
     [Header("Gameplay")]
-    public bool invertY = false;
-    public float sensitivity = 1.0f;
-
-    [Header("Input")]
-    public InputBindings defaultInputBindings;
+    public GameplaySettings gameplay = new GameplaySettings();
 }
