@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
+    // UI
     public CanvasGroup fadeCanvasGroup;
     public float fadeDuration = 1f;
 
@@ -10,21 +11,6 @@ public class MainMenu : MonoBehaviour
     {
         fadeCanvasGroup.gameObject.SetActive(true);
         StartCoroutine(FadeIn());
-    }
-
-    public void PlayGame()
-    {
-        StartCoroutine(TransitionToLoadingScene());
-    }
-
-    public void OpenSettings()
-    {
-        UIManager.Instance.OnOpenSettings();
-    }
-
-    public void ExitGame()
-    {
-        UIManager.Instance.OnExitGame();
     }
 
     private IEnumerator TransitionToLoadingScene()
@@ -61,5 +47,21 @@ public class MainMenu : MonoBehaviour
         }
         fadeCanvasGroup.alpha = 0;
         fadeCanvasGroup.gameObject.SetActive(false);
+    }
+
+    // Buttons
+    public void PlayGame()
+    {
+        StartCoroutine(TransitionToLoadingScene());
+    }
+
+    public void OpenSettings()
+    {
+        UIManager.Instance.OnOpenSettings();
+    }
+
+    public void ExitGame()
+    {
+        UIManager.Instance.OnExitGame();
     }
 }

@@ -33,13 +33,13 @@ public class UIManager : MonoBehaviour
         switch (newState)
         {
             case GameState.MainMenu:
-                // Afficher l'UI
+                // UI
                 break;
             case GameState.Settings:
-                // Afficher l'UI
+                // UI
                 break;
             case GameState.Playing:
-                // Afficher l'UI
+                // UI
                 break;
         }
     }
@@ -50,11 +50,11 @@ public class UIManager : MonoBehaviour
         {
             case SceneNames.SettingsMenu:
                 Debug.Log("[UIManager] Settings Menu loaded.");
-                // Afficher l'UI
+                // UI
                 break;
             case SceneNames.MainMenu:
                 Debug.Log("[UIManager] Main Menu loaded.");
-                // Afficher l'UI
+                // UI
                 break;
         }
     }

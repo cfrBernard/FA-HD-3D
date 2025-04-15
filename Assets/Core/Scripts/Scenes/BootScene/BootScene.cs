@@ -17,6 +17,7 @@ public class BootScene : MonoBehaviour
     // Singletons
     private GameManager gameManager;
     private SceneManager sceneManager;
+    private SaveManager saveManager; 
     private SettingsManager settingsManager;
     private InputManager inputManager;
     private UIManager _UIManager;
@@ -72,6 +73,14 @@ public class BootScene : MonoBehaviour
         }
         else
             sceneManager = SceneManager.Instance;
+
+        if (SaveManager.Instance == null)
+        {
+            saveManager = new GameObject("SaveManager").AddComponent<SaveManager>();
+            DontDestroyOnLoad(saveManager.gameObject);
+        }
+        else
+            saveManager = SaveManager.Instance;
     
         if (SettingsManager.Instance == null)
         {
