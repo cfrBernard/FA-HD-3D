@@ -16,5 +16,6 @@ public class ParamDefinition
     public float minValue;
     public float maxValue;
     public bool showDecimal;
+    public string[] dropdownOptions;
 }
 

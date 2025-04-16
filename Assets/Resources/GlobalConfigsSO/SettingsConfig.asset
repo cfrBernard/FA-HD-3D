@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: SettingsConfig
   m_EditorClassIdentifier: 
   audio:
-    masterVolume: 1
-    musicVolume: 1
-    sfxVolume: 1
-    envVolume: 1
+    masterVolume: 100
+    musicVolume: 100
+    sfxVolume: 100
+    envVolume: 100
+    uiVolume: 100
+    muteAll: 0
   video:
     resolutionIndex: 0
     fullscreen: 1
@@ -25,107 +27,3 @@ MonoBehaviour:
   gameplay:
     invertY: 0
     sensitivity: 1
-  defaultInputBindings:
-    inputActionOverridesJson: 'Action: Move - Bindings:
-
-      - <Gamepad>/leftStick
-
-      -
-      Dpad
-
-      - <Keyboard>/w
-
-      - <Keyboard>/upArrow
-
-      - <Keyboard>/s
-
-      -
-      <Keyboard>/downArrow
-
-      - <Keyboard>/a
-
-      - <Keyboard>/leftArrow
-
-      -
-      <Keyboard>/d
-
-      - <Keyboard>/rightArrow
-
-      - <XRController>/{Primary2DAxis}
-
-      -
-      <Joystick>/stick
-
-      Action: Look - Bindings:
-
-      - <Gamepad>/rightStick
-
-      -
-      <Pointer>/delta
-
-      - <Joystick>/{Hatswitch}
-
-      Action: Attack - Bindings:
-
-      -
-      <Gamepad>/buttonWest
-
-      - <Mouse>/leftButton
-
-      - <Touchscreen>/primaryTouch/tap
-
-      -
-      <Joystick>/trigger
-
-      - <XRController>/{PrimaryAction}
-
-      - <Keyboard>/enter
-
-      Action:
-      Interact - Bindings:
-
-      - <Keyboard>/e
-
-      - <Gamepad>/buttonNorth
-
-      Action:
-      Crouch - Bindings:
-
-      - <Gamepad>/buttonEast
-
-      - <Keyboard>/c
-
-      Action:
-      Jump - Bindings:
-
-      - <Keyboard>/space
-
-      - <Gamepad>/buttonSouth
-
-      -
-      <XRController>/secondaryButton
-
-      Action: Sprint - Bindings:
-
-      - <Keyboard>/leftShift
-
-      -
-      <Gamepad>/leftStickPress
-
-      - <XRController>/trigger
-
-      Action: Previous
-      - Bindings:
-
-      - <Keyboard>/1
-
-      - <Gamepad>/dpad/left
-
-      Action:
-      Next - Bindings:
-
-      - <Keyboard>/2
-
-      - <Gamepad>/dpad/right
-
-'

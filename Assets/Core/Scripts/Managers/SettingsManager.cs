@@ -50,7 +50,7 @@ public class SettingsManager : MonoBehaviour
         var saved = SaveManager.LoadSettings();
         _data = saved ?? new SettingsData().CopyFrom(GlobalConfigs.Settings);
 
-        ApplySettings();
+        ApplySettings(); // too early? (fix: AudioManager(start))
     }
 
     public void ApplySettings()

@@ -20,10 +20,12 @@ MonoBehaviour:
     minValue: 0
     maxValue: 0
     showDecimal: 0
+    dropdownOptions: []
   - key: gameplay.sensitivity
     label: Sensitivity
     propertyPath: gameplay.sensitivity
     type: 0
     minValue: 0
-    maxValue: 1
+    maxValue: 100
     showDecimal: 1
+    dropdownOptions: []

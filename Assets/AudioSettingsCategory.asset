@@ -18,26 +18,46 @@ MonoBehaviour:
     propertyPath: audio.masterVolume
     type: 0
     minValue: 0
-    maxValue: 1
-    showDecimal: 1
+    maxValue: 100
+    showDecimal: 0
+    dropdownOptions: []
   - key: audio.musicVolume
     label: Music Volume
     propertyPath: audio.musicVolume
     type: 0
     minValue: 0
-    maxValue: 1
-    showDecimal: 1
+    maxValue: 100
+    showDecimal: 0
+    dropdownOptions: []
   - key: audio.sfxVolume
     label: Sfx Volume
     propertyPath: audio.sfxVolume
     type: 0
     minValue: 0
-    maxValue: 1
-    showDecimal: 1
+    maxValue: 100
+    showDecimal: 0
+    dropdownOptions: []
   - key: audio.envVolume
     label: Env Volume
     propertyPath: audio.envVolume
     type: 0
     minValue: 0
-    maxValue: 1
-    showDecimal: 1
+    maxValue: 100
+    showDecimal: 0
+    dropdownOptions: []
+  - key: audio.uiVolume
+    label: Ui Volume
+    propertyPath: audio.uiVolume
+    type: 0
+    minValue: 0
+    maxValue: 100
+    showDecimal: 0
+    dropdownOptions: []
+  - key: audio.muteAll
+    label: Mute All
+    propertyPath: audio.muteAll
+    type: 1
+    minValue: 0
+    maxValue: 0
+    showDecimal: 0
+    dropdownOptions: []

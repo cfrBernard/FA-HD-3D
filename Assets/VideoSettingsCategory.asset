@@ -20,6 +20,7 @@ MonoBehaviour:
     minValue: 0
     maxValue: 10
     showDecimal: 0
+    dropdownOptions: []
   - key: video.fullscreen
     label: Fullscreen
     propertyPath: video.fullscreen
@@ -27,6 +28,7 @@ MonoBehaviour:
     minValue: 0
     maxValue: 0
     showDecimal: 0
+    dropdownOptions: []
   - key: video.targetFramerate
     label: Target Framerate
     propertyPath: video.targetFramerate
@@ -34,6 +36,7 @@ MonoBehaviour:
     minValue: 0
     maxValue: 10
     showDecimal: 0
+    dropdownOptions: []
   - key: video.vsync
     label: Vsync
     propertyPath: video.vsync
@@ -41,3 +44,4 @@ MonoBehaviour:
     minValue: 0
     maxValue: 0
     showDecimal: 0
+    dropdownOptions: []

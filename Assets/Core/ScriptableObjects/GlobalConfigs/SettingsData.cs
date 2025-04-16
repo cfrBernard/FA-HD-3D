@@ -1,13 +1,16 @@
-[System.Serializable]
+using System;
+[Serializable]
 public class AudioSettings
 {
-    public float masterVolume = 1f;
-    public float musicVolume = 1f;
-    public float sfxVolume = 1f;
-    public float envVolume = 1f;
+    public float masterVolume = 100f;
+    public float musicVolume = 100f;
+    public float sfxVolume = 100f;
+    public float envVolume = 100f;
+    public float uiVolume = 100f;
+    public bool muteAll = false;
 }
 
-[System.Serializable]
+[Serializable]
 public class VideoSettings
 {
     public int resolutionIndex = 0;
@@ -16,20 +19,20 @@ public class VideoSettings
     public bool vsync = false;
 }
 
-[System.Serializable]
+[Serializable]
 public class GameplaySettings
 {
     public bool invertY = false;
     public float sensitivity = 1f;
 }
 
-[System.Serializable]
+[Serializable]
 public class InputBindings
 {
     public string inputActionOverridesJson;
 }
 
-[System.Serializable]
+[Serializable]
 public class SettingsData
 {
     public AudioSettings audio = new AudioSettings();
@@ -45,6 +48,8 @@ public class SettingsData
             musicVolume = config.audio.musicVolume,
             sfxVolume = config.audio.sfxVolume,
             envVolume = config.audio.envVolume,
+            uiVolume = config.audio.uiVolume,
+            muteAll = config.audio.muteAll,
         };
 
         video = new VideoSettings

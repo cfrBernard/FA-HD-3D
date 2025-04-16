@@ -60,7 +60,7 @@ public class SettingsExporter : MonoBehaviour
         {
             param.type = ParamType.Slider;
             param.minValue = 0f;
-            param.maxValue = 1f;
+            param.maxValue = 100f;
             param.showDecimal = true;
         }
         else if (field.FieldType == typeof(int))
