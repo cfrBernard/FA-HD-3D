@@ -56,6 +56,8 @@ public class SettingsManager : MonoBehaviour
     public void ApplySettings()
     {
         AudioManager.Instance?.UpdateVolumes(_data);
+        VideoManager.Instance?.ApplyVideoSettings(_data);
+        VideoManager.Instance?.ApplyGraphicsSettings(_data);
         InputManager.Instance?.UpdateBindings(_data);
     }
 

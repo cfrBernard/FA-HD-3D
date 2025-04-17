@@ -23,6 +23,7 @@ public class BootScene : MonoBehaviour
     private UIManager _UIManager;
     private EventManager eventManager;
     private AudioManager audioManager;
+    private VideoManager videoManager;
     private ToolsManager toolsManager;
     private FPSDisplay _FPSDisplay;
     
@@ -121,6 +122,14 @@ public class BootScene : MonoBehaviour
         }
         else
             audioManager = AudioManager.Instance;
+
+        if (VideoManager.Instance == null)
+        {
+            videoManager = new GameObject("VideoManager").AddComponent<VideoManager>();
+            DontDestroyOnLoad(videoManager.gameObject);
+        }
+        else
+            videoManager = VideoManager.Instance;
 
         if (ToolsManager.Instance == null)
         { 

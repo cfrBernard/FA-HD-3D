@@ -27,5 +27,5 @@ MonoBehaviour:
     type: 0
     minValue: 0
     maxValue: 100
-    showDecimal: 1
+    showDecimal: 0
     dropdownOptions: []
