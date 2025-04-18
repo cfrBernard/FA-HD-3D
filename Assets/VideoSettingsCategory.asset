@@ -21,10 +21,10 @@ MonoBehaviour:
     maxValue: 0
     showDecimal: 0
     dropdownOptions:
+    - 1280x720
     - 1920x1080
     - 2560x1440
     - 3840x2160
-    - 1280x720
   - key: video.fullscreen
     label: Fullscreen
     propertyPath: video.fullscreen
@@ -50,22 +50,6 @@ MonoBehaviour:
   - key: video.vsync
     label: Vsync
     propertyPath: video.vsync
-    type: 1
-    minValue: 0
-    maxValue: 0
-    showDecimal: 0
-    dropdownOptions: []
-  - key: video.uiScale
-    label: Ui Scale
-    propertyPath: video.uiScale
-    type: 0
-    minValue: 0
-    maxValue: 100
-    showDecimal: 0
-    dropdownOptions: []
-  - key: video.hdr
-    label: Hdr
-    propertyPath: video.hdr
     type: 1
     minValue: 0
     maxValue: 0

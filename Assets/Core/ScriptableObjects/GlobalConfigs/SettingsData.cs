@@ -2,20 +2,53 @@ using System;
 
 #region Game
 [Serializable]
+public enum CrosshairStyle
+{
+    Default,
+    Dot,
+    Circle,
+    Cross,
+    None
+}
+
+public enum SubtitleSize
+{
+    Small,
+    Medium,
+    Large
+}
+
+[Serializable]
 public class GameplaySettings
 {
     public bool invertY = false;
+
+    // range 0.1 - 5
     public float sensitivity = 1f;
+    
+    // range 60 - 120
+    public float fov = 90f;
+    
+    // public bool subtitles = true;
+    // public SubtitleSize subtitleSize = SubtitleSize.Medium;
+    // public bool autoSave = true;
+    // public bool cameraShake = true;
+    // public bool headbob = true;
+    // public CrosshairStyle crosshairStyle = CrosshairStyle.Default;
+    // public float crosshairSize = 1f;
+    
+    // ColorUtility for color picker ???
+    // public string crosshairColorHex = "#FFFFFF";
 }
 #endregion
 
 #region Video
 public enum ResolutionOption
 {
+    R1280x720,
     R1920x1080,
     R2560x1440,
-    R3840x2160,
-    R1280x720
+    R3840x2160
 }
 
 public enum TargetFramerate
@@ -35,8 +68,9 @@ public class VideoSettings
     public bool fullscreen = true;
     public TargetFramerate targetFramerate = TargetFramerate.FPS60;
     public bool vsync = false;
-    public float uiScale = 1f;
-    public bool hdr = false;
+    
+    // public float uiScale = 1f;
+    // public bool hdr = false;
 }
 #endregion
 
@@ -99,6 +133,16 @@ public class SettingsData
         {
             invertY = config.gameplay.invertY,
             sensitivity = config.gameplay.sensitivity,
+            fov = config.gameplay.fov,
+            
+            // subtitles = config.gameplay.subtitles,
+            // subtitleSize = config.gameplay.subtitleSize,
+            // autoSave = config.gameplay.autoSave,
+            // cameraShake = config.gameplay.cameraShake,
+            // headbob = config.gameplay.headbob,
+            // crosshairStyle = config.gameplay.crosshairStyle,
+            // crosshairSize = config.gameplay.crosshairSize,
+            // crosshairColorHex = config.gameplay.crosshairColorHex,
         };
 
         video = new VideoSettings
@@ -107,8 +151,8 @@ public class SettingsData
             fullscreen = config.video.fullscreen,
             targetFramerate = config.video.targetFramerate,
             vsync = config.video.vsync,
-            uiScale = config.video.uiScale,
-            hdr = config.video.hdr,
+            // uiScale = config.video.uiScale,
+            // hdr = config.video.hdr,
         };
 
         graphics = new GraphicsSettings

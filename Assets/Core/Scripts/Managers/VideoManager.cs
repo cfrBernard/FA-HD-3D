@@ -28,28 +28,19 @@ public class VideoManager : MonoBehaviour
     {
         VideoSettings video = data.video;
 
-        // Resolution
-        // TODO: Map enum to actual resolution and apply via Screen.SetResolution
-        // Example: Screen.SetResolution(1920, 1080, settings.fullscreen);
-        // ApplyResolution(video.resolution, video.fullscreen);
+        // Resolution / fullscreen
+        ApplyResolution(video.resolution, video.fullscreen);
 
         // VSync
-        //QualitySettings.vSyncCount = video.vsync ? 1 : 0;
+        QualitySettings.vSyncCount = video.vsync ? 1 : 0;
+        Debug.Log("VSync count set to: " + QualitySettings.vSyncCount);
 
         // Framerate cap
-        // TODO: If TargetFramerate.Unlimited, set to -1, otherwise set Application.targetFrameRate
-        // ApplyTargetFramerate(video.targetFramerate);
-
-        // UI Scale
-        // TODO: Send event or notify UI scaler system
-        // UIManager.Instance.SetUIScale(video.uiScale);
-
-        // HDR
-        // TODO: Needs to be handled per camera or render pipeline
-        // GraphicsSettingsManager.Instance.SetHDR(video.hdr);
+        TargetFramerate targetFramerate = TargetFramerateFromIndex((int)video.targetFramerate);
+        ApplyTargetFramerate(targetFramerate);
     }
 
-    public void ApplyGraphicsSettings(SettingsData data)
+    public void ApplyGraphicsSettings(SettingsData data) // let him sleep
     {
         GraphicsSettings graphics = data.graphics;
 
@@ -95,7 +86,32 @@ public class VideoManager : MonoBehaviour
 
     private void ApplyTargetFramerate(TargetFramerate target)
     {
-        Application.targetFrameRate = (int)target;
+        int fpsValue = (int)target;
+
+        if (QualitySettings.vSyncCount > 0)
+        {
+            Application.targetFrameRate = -1;
+            Debug.Log("VSync is active, targetFrameRate ignored");
+        }
+        else
+        {
+            Application.targetFrameRate = fpsValue;
+            Debug.Log("Frame cap set to: " + fpsValue);
+        }
+    }
+
+    private TargetFramerate TargetFramerateFromIndex(int index)
+    {
+        switch (index)
+        {
+            case 0: return TargetFramerate.FPS30;
+            case 1: return TargetFramerate.FPS60;
+            case 2: return TargetFramerate.FPS120;
+            case 3: return TargetFramerate.FPS144;
+            case 4: return TargetFramerate.FPS240;
+            case 5: return TargetFramerate.Unlimited;
+            default: return TargetFramerate.FPS60;
+        }
     }
 
     private void ApplyShadowQuality(ShadowQuality quality)

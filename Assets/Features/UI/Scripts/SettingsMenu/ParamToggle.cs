@@ -13,13 +13,13 @@ public class ParamToggle : MonoBehaviour
         label.text = labelText;
         UpdateVisuals(initialValue);
 
-        onButton.onClick.AddListener(() =>
+        offButton.onClick.AddListener(() =>
         {
             UpdateVisuals(true);
             onValueChanged(true);
         });
 
-        offButton.onClick.AddListener(() =>
+        onButton.onClick.AddListener(() =>
         {
             UpdateVisuals(false);
             onValueChanged(false);
@@ -28,7 +28,7 @@ public class ParamToggle : MonoBehaviour
 
     private void UpdateVisuals(bool isOn)
     {
-        onButton.interactable = !isOn;
-        offButton.interactable = isOn;
+        onButton.interactable = isOn;
+        offButton.interactable = !isOn;
     }
 }

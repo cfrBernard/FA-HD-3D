@@ -25,7 +25,15 @@ MonoBehaviour:
     label: Sensitivity
     propertyPath: gameplay.sensitivity
     type: 0
-    minValue: 0
-    maxValue: 100
+    minValue: 0.1
+    maxValue: 5
+    showDecimal: 1
+    dropdownOptions: []
+  - key: gameplay.fov
+    label: Fov
+    propertyPath: gameplay.fov
+    type: 0
+    minValue: 60
+    maxValue: 120
     showDecimal: 0
     dropdownOptions: []
