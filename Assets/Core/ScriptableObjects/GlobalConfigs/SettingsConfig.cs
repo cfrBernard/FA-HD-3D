@@ -14,4 +14,10 @@ public class SettingsConfig : ScriptableObject
 
     [Header("Audio")]
     public AudioSettings audio = new AudioSettings();
+
+    [Header("KBM")]
+    public KBMSettings kbm = new KBMSettings();
+
+    [Header("Gamepad")]
+    public GamepadSettings controller = new GamepadSettings();
 }

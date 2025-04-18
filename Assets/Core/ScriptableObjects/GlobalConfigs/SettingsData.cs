@@ -21,11 +21,6 @@ public enum SubtitleSize
 [Serializable]
 public class GameplaySettings
 {
-    public bool invertY = false;
-
-    // range 0.1 - 5
-    public float sensitivity = 1f;
-    
     // range 60 - 120
     public float fov = 90f;
     
@@ -109,7 +104,44 @@ public class AudioSettings
 }
 #endregion
 
-# region Input
+# region Controls
+[Serializable]
+public class KBMSettings
+{
+    // range 0.01 - 5 
+    public float mouseSensitivityX = 1f;
+    
+    // range 0.01 - 5 
+    public float mouseSensitivityY = 1f;
+    public bool invertMouseX = false;
+    public bool invertMouseY = false;
+    public bool rawInput = true;
+    public bool mouseSmoothing = false;
+
+    // range 0.01 - 5 
+    public float smoothingAmount = 0.5f;
+}
+
+[Serializable]
+public class GamepadSettings
+{
+    // range 0.01 - 5 
+    public float stickSensitivityX = 1f;
+    
+    // range 0.01 - 5 
+    public float stickSensitivityY = 1f;
+    public bool invertStickX = false;
+    public bool invertStickY = false;
+    
+    // range 0.01 - 1 
+    public float deadzoneLeft = 0.1f;
+    
+    // range 0.01 - 1 
+    public float deadzoneRight = 0.1f;
+    
+    // public bool aimAssist = true;
+}
+
 [Serializable]
 public class InputBindings
 {
@@ -121,18 +153,19 @@ public class InputBindings
 [Serializable]
 public class SettingsData
 {
-    public AudioSettings audio = new AudioSettings();
+    public GameplaySettings gameplay = new GameplaySettings();
     public VideoSettings video = new VideoSettings();
     public GraphicsSettings graphics = new GraphicsSettings();
-    public GameplaySettings gameplay = new GameplaySettings();
+    public AudioSettings audio = new AudioSettings();
+    public KBMSettings kbm = new KBMSettings();
+    public GamepadSettings controller = new GamepadSettings();
+    
     public InputBindings inputBindings;
 
     public SettingsData CopyFrom(SettingsConfig config)
     {
         gameplay = new GameplaySettings
         {
-            invertY = config.gameplay.invertY,
-            sensitivity = config.gameplay.sensitivity,
             fov = config.gameplay.fov,
             
             // subtitles = config.gameplay.subtitles,
@@ -151,6 +184,7 @@ public class SettingsData
             fullscreen = config.video.fullscreen,
             targetFramerate = config.video.targetFramerate,
             vsync = config.video.vsync,
+            
             // uiScale = config.video.uiScale,
             // hdr = config.video.hdr,
         };
@@ -177,6 +211,30 @@ public class SettingsData
             uiVolume = config.audio.uiVolume,
             muteAll = config.audio.muteAll,
         };
+
+        kbm = new KBMSettings
+        {
+            mouseSensitivityX = config.kbm.mouseSensitivityX,
+            mouseSensitivityY = config.kbm.mouseSensitivityY,
+            invertMouseX = config.kbm.invertMouseX,
+            invertMouseY = config.kbm.invertMouseY,
+            rawInput = config.kbm.rawInput,
+            mouseSmoothing = config.kbm.mouseSmoothing,
+            smoothingAmount = config.kbm.smoothingAmount
+        };
+
+        controller = new GamepadSettings
+        {
+            stickSensitivityX = config.controller.stickSensitivityX,
+            stickSensitivityY = config.controller.stickSensitivityY,
+            invertStickX = config.controller.invertStickX,
+            invertStickY = config.controller.invertStickY,
+            deadzoneLeft = config.controller.deadzoneLeft,
+            deadzoneRight = config.controller.deadzoneRight,
+            
+            // aimAssist = config.controller.aimAssist
+        };
+
 
         inputBindings = new InputBindings();
 

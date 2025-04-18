@@ -17,8 +17,11 @@ public class SettingsExporter : MonoBehaviour
 
         ExportCategory("AudioSettingsCategory", data.audio, "Assets/AudioSettingsCategory.asset");
         ExportCategory("VideoSettingsCategory", data.video, "Assets/VideoSettingsCategory.asset");
-        ExportCategory("GameplaySettingsCategory", data.gameplay, "Assets/GameplaySettingsCategory.asset");
+        // ExportCategory("GameplaySettingsCategory", data.gameplay, "Assets/GameplaySettingsCategory.asset");
         ExportCategory("GraphicsSettingsCategory", data.graphics, "Assets/GraphicsSettingsCategory.asset");
+        // ExportCategory("KBMSettingsCategory", data.kbm, "Assets/KBMSettingsCategory.asset");
+        // ExportCategory("GamepadSettingsCategory", data.controller, "Assets/GamepadSettingsCategory.asset");
+
 
         Debug.Log("[SettingsExporter] Exported all categories.");
     }

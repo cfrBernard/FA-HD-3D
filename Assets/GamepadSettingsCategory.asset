@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f203f4954c3777c43a9170ad728620cf, type: 3}
+  m_Name: GamepadSettingsCategory
+  m_EditorClassIdentifier: 
+  parameters:
+  - key: gamepad.stickSensitivityX
+    label: Stick Sensitivity X
+    propertyPath: gamepad.stickSensitivityX
+    type: 0
+    minValue: 0.01
+    maxValue: 5
+    showDecimal: 1
+    dropdownOptions: []
+  - key: gamepad.stickSensitivityY
+    label: Stick Sensitivity Y
+    propertyPath: gamepad.stickSensitivityY
+    type: 0
+    minValue: 0.01
+    maxValue: 5
+    showDecimal: 1
+    dropdownOptions: []
+  - key: gamepad.invertStickX
+    label: Invert Stick X
+    propertyPath: gamepad.invertStickX
+    type: 1
+    minValue: 0
+    maxValue: 0
+    showDecimal: 0
+    dropdownOptions: []
+  - key: gamepad.invertStickY
+    label: Invert Stick Y
+    propertyPath: gamepad.invertStickY
+    type: 1
+    minValue: 0
+    maxValue: 0
+    showDecimal: 0
+    dropdownOptions: []
+  - key: gamepad.deadzoneLeft
+    label: Deadzone Left
+    propertyPath: gamepad.deadzoneLeft
+    type: 0
+    minValue: 0.01
+    maxValue: 1
+    showDecimal: 1
+    dropdownOptions: []
+  - key: gamepad.deadzoneRight
+    label: Deadzone Right
+    propertyPath: gamepad.deadzoneRight
+    type: 0
+    minValue: 0.01
+    maxValue: 1
+    showDecimal: 1
+    dropdownOptions: []
