@@ -1323,7 +1323,7 @@ GameObject:
   - component: {fileID: 205295617}
   - component: {fileID: 205295618}
   m_Layer: 0
-  m_Name: InputSettingsUI
+  m_Name: ControlsSettingsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1356,9 +1356,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af9365d9850c074a9581ac39e0ed96f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kbmCategory: {fileID: 11400000, guid: 18abf9bc6e729714e8513ac0745225fa, type: 2}
+  gamepadCategory: {fileID: 11400000, guid: 931be1a4b384c93449fa59556689f7f0, type: 2}
+  paramSliderPrefab: {fileID: 4795713966764395337, guid: 3f99cd26a1234c64f9ca9f2068fb50c7, type: 3}
+  paramTogglePrefab: {fileID: 6453975492436170387, guid: ccb26743f0043b24284af6d95ad24d40, type: 3}
+  paramDropdownPrefab: {fileID: 8727441184662326025, guid: f2d84517a6aaedc43b5b5386a216a68c, type: 3}
+  separatorPrefab: {fileID: 8705520772717240415, guid: 481eac3a1ef3dd3428d5e229e2bfc2d4, type: 3}
   keyboardPanel: {fileID: 2116231898}
   gamepadPanel: {fileID: 938407621}
-  rebindButtonPrefab: {fileID: 5082044278288036972, guid: d9982298e4b52e048a0ea6d39ac1bcff, type: 3}
+  paramRebindPrefab: {fileID: 4011240670901741231, guid: 7016a214e5a45c94c9f4fa6ea9d4b696, type: 3}
 --- !u!1 &209627991
 GameObject:
   m_ObjectHideFlags: 0

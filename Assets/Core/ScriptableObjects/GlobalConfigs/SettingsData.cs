@@ -158,7 +158,7 @@ public class SettingsData
     public GraphicsSettings graphics = new GraphicsSettings();
     public AudioSettings audio = new AudioSettings();
     public KBMSettings kbm = new KBMSettings();
-    public GamepadSettings controller = new GamepadSettings();
+    public GamepadSettings gamepad = new GamepadSettings();
     
     public InputBindings inputBindings;
 
@@ -223,16 +223,16 @@ public class SettingsData
             smoothingAmount = config.kbm.smoothingAmount
         };
 
-        controller = new GamepadSettings
+        gamepad = new GamepadSettings
         {
-            stickSensitivityX = config.controller.stickSensitivityX,
-            stickSensitivityY = config.controller.stickSensitivityY,
-            invertStickX = config.controller.invertStickX,
-            invertStickY = config.controller.invertStickY,
-            deadzoneLeft = config.controller.deadzoneLeft,
-            deadzoneRight = config.controller.deadzoneRight,
+            stickSensitivityX = config.gamepad.stickSensitivityX,
+            stickSensitivityY = config.gamepad.stickSensitivityY,
+            invertStickX = config.gamepad.invertStickX,
+            invertStickY = config.gamepad.invertStickY,
+            deadzoneLeft = config.gamepad.deadzoneLeft,
+            deadzoneRight = config.gamepad.deadzoneRight,
             
-            // aimAssist = config.controller.aimAssist
+            // aimAssist = config.gamepad.aimAssist
         };
 
 

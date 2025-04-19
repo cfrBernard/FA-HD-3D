@@ -19,5 +19,5 @@ public class SettingsConfig : ScriptableObject
     public KBMSettings kbm = new KBMSettings();
 
     [Header("Gamepad")]
-    public GamepadSettings controller = new GamepadSettings();
+    public GamepadSettings gamepad = new GamepadSettings();
 }
