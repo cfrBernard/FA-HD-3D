@@ -109,10 +109,11 @@ public class ControlsSettingsUI : MonoBehaviour
         foreach (var map in inputActions.actionMaps)
         {
             if (map.name != "Player") continue;
-        
+
             foreach (var action in map.actions)
             {
-                // filtre les bindings pour ce device group
+                if (action.name == "Move" || action.name == "Look") continue;
+
                 List<int> matchingIndices = new();
                 for (int i = 0; i < action.bindings.Count; i++)
                 {
@@ -121,9 +122,9 @@ public class ControlsSettingsUI : MonoBehaviour
                     if (!binding.groups.Contains(deviceGroup)) continue;
                     matchingIndices.Add(i);
                 }
-        
+
                 if (matchingIndices.Count == 0) continue;
-        
+
                 var go = Instantiate(paramRebindPrefab, targetPanel.transform);
                 var paramRebind = go.GetComponent<ParamRebind>();
                 paramRebind.actionMap = map.name;
