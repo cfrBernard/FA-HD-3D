@@ -2,8 +2,7 @@ public enum ParamType
 {
     Slider,
     Toggle,
-    Dropdown,
-    Rebind
+    Dropdown
 }
 
 [System.Serializable]

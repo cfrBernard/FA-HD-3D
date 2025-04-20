@@ -45,14 +45,6 @@ MonoBehaviour:
     maxValue: 0
     showDecimal: 0
     dropdownOptions: []
-  - key: kbm.rawInput
-    label: Raw Input
-    propertyPath: kbm.rawInput
-    type: 1
-    minValue: 0
-    maxValue: 0
-    showDecimal: 0
-    dropdownOptions: []
   - key: kbm.mouseSmoothing
     label: Mouse Smoothing
     propertyPath: kbm.mouseSmoothing

@@ -115,7 +115,6 @@ public class KBMSettings
     public float mouseSensitivityY = 1f;
     public bool invertMouseX = false;
     public bool invertMouseY = false;
-    public bool rawInput = true;
     public bool mouseSmoothing = false;
 
     // range 0.01 - 5 
@@ -218,7 +217,6 @@ public class SettingsData
             mouseSensitivityY = config.kbm.mouseSensitivityY,
             invertMouseX = config.kbm.invertMouseX,
             invertMouseY = config.kbm.invertMouseY,
-            rawInput = config.kbm.rawInput,
             mouseSmoothing = config.kbm.mouseSmoothing,
             smoothingAmount = config.kbm.smoothingAmount
         };

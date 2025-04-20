@@ -9,6 +9,7 @@ public class ParamRebind : MonoBehaviour
     public string actionName;
     public int bindingIndex1;
     public int bindingIndex2;
+    public string labelOverride;
 
     public TextMeshProUGUI actionLabel;
     public Button rebindBtn1;
@@ -24,7 +25,7 @@ public class ParamRebind : MonoBehaviour
     void UpdateLabels()
     {
         var display1 = InputManager.Instance.GetBindingDisplay(actionMap, actionName, bindingIndex1);
-        actionLabel.text = $"{actionName}";
+        actionLabel.text = string.IsNullOrEmpty(labelOverride) ? actionName : labelOverride;
         rebindBtn1.GetComponentInChildren<TextMeshProUGUI>().text = display1.Contains("none") ? "" : display1;
 
         if (bindingIndex2 >= 0)
