@@ -58,7 +58,6 @@ public class ControlsSettingsUI : MonoBehaviour
             switch (param.type)
             {
                 case ParamType.Slider:
-                    Debug.Log($"[ControlsSettingsUI] Trying to get value for '{param.label}' at path '{param.propertyPath}'");
                     float floatValue = (float)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
                     var s = Instantiate(paramSliderPrefab, targetPanel);
                     s.GetComponent<ParamSlider>().Setup(
