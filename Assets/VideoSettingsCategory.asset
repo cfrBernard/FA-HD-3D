@@ -13,13 +13,18 @@ MonoBehaviour:
   m_Name: VideoSettingsCategory
   m_EditorClassIdentifier: 
   parameters:
-  - key: video.resolutionIndex
-    label: Resolution Index
-    propertyPath: video.resolutionIndex
-    type: 0
+  - key: video.resolution
+    label: Resolution
+    propertyPath: video.resolution
+    type: 2
     minValue: 0
-    maxValue: 10
+    maxValue: 0
     showDecimal: 0
+    dropdownOptions:
+    - 1280x720
+    - 1920x1080
+    - 2560x1440
+    - 3840x2160
   - key: video.fullscreen
     label: Fullscreen
     propertyPath: video.fullscreen
@@ -27,13 +32,21 @@ MonoBehaviour:
     minValue: 0
     maxValue: 0
     showDecimal: 0
+    dropdownOptions: []
   - key: video.targetFramerate
     label: Target Framerate
     propertyPath: video.targetFramerate
-    type: 0
+    type: 2
     minValue: 0
-    maxValue: 10
+    maxValue: 0
     showDecimal: 0
+    dropdownOptions:
+    - 30 FPS
+    - 60 FPS
+    - 120 FPS
+    - 144 FPS
+    - 240 FPS
+    - Unlimited
   - key: video.vsync
     label: Vsync
     propertyPath: video.vsync
@@ -41,3 +54,4 @@ MonoBehaviour:
     minValue: 0
     maxValue: 0
     showDecimal: 0
+    dropdownOptions: []

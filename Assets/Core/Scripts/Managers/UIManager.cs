@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
     public void OnOpenSettings()
     {
         Debug.Log("SETTINGS");
-        GameManager.Instance.SetGameState(GameState.Settings);
+        SceneManager.Instance.LoadAdditiveScene(SceneNames.SettingsMenu);
     }
 
     public void OnExitGame()

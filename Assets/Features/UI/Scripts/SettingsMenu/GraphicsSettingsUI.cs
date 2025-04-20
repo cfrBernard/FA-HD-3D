@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AudioSettingsUI : MonoBehaviour
+public class GraphicsSettingsUI : MonoBehaviour
 {
     [Header("UI Elements")]
     public SettingsCategory categoryAsset;
@@ -64,25 +64,7 @@ public class AudioSettingsUI : MonoBehaviour
     private void HandleToggle(ParamDefinition param)
     {
         bool currentValue = (bool)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
-        if (param.propertyPath == "audio.muteAll")
-        {
-            CreateMuteToggle(param, currentValue);
-        }
-        else
-        {
-            CreateGeneralToggle(param, currentValue);
-        }
-    }
-
-    private void CreateMuteToggle(ParamDefinition param, bool currentValue)
-    {
-        var go = Instantiate(paramTogglePrefab, contentPanel);
-        var toggle = go.GetComponent<ParamToggle>();
-        toggle.Setup(param.label, currentValue, value =>
-        {
-            ReflectionUtils.SetValueByPath(settingsData, param.propertyPath, value);
-            ApplyAndSave();
-        });
+        CreateGeneralToggle(param, currentValue);
     }
 
     private void CreateGeneralToggle(ParamDefinition param, bool currentValue)
@@ -106,9 +88,10 @@ public class AudioSettingsUI : MonoBehaviour
     {
         var go = Instantiate(paramDropdownPrefab, contentPanel);
         var dropdown = go.GetComponent<ParamDropdown>();
-        dropdown.Setup(param.label, param.dropdownOptions, currentValue, index =>
+
+        dropdown.Setup(param.label, param.dropdownOptions, currentValue, value =>
         {
-            ReflectionUtils.SetValueByPath(settingsData, param.propertyPath, index);
+            ReflectionUtils.SetValueByPath(settingsData, param.key, value);
             ApplyAndSave();
         });
     }
@@ -117,5 +100,5 @@ public class AudioSettingsUI : MonoBehaviour
     {
         SettingsManager.Instance.Save();
         SettingsManager.Instance.ApplySettings();
-    }
+    } 
 }

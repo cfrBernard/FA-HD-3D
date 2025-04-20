@@ -2,8 +2,7 @@ public enum ParamType
 {
     Slider,
     Toggle,
-    Dropdown,
-    Rebind
+    Dropdown
 }
 
 [System.Serializable]
@@ -16,5 +15,6 @@ public class ParamDefinition
     public float minValue;
     public float maxValue;
     public bool showDecimal;
+    public string[] dropdownOptions;
 }
 

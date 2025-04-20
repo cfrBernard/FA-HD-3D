@@ -13,17 +13,11 @@ MonoBehaviour:
   m_Name: GameplaySettingsCategory
   m_EditorClassIdentifier: 
   parameters:
-  - key: gameplay.invertY
-    label: Invert Y
-    propertyPath: gameplay.invertY
-    type: 1
-    minValue: 0
-    maxValue: 0
-    showDecimal: 0
-  - key: gameplay.sensitivity
-    label: Sensitivity
-    propertyPath: gameplay.sensitivity
+  - key: gameplay.fov
+    label: Fov
+    propertyPath: gameplay.fov
     type: 0
-    minValue: 0
-    maxValue: 1
-    showDecimal: 1
+    minValue: 60
+    maxValue: 120
+    showDecimal: 0
+    dropdownOptions: []
