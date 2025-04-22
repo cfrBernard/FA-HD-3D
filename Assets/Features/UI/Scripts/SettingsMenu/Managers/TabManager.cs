@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class TabManager : MonoBehaviour
 {
@@ -8,12 +10,38 @@ public class TabManager : MonoBehaviour
 
     private int currentTabIndex = 0;
 
+    public InputAction nextTabAction;
+    public InputAction previousTabAction;
+
+    private _TabButton[] tabButtonScripts;
+
+    private void OnEnable()
+    {
+        nextTabAction.Enable();
+        previousTabAction.Enable();
+
+        nextTabAction.performed += _ => SwitchToNextTab();
+        previousTabAction.performed += _ => SwitchToPreviousTab();
+    }
+
+    private void OnDisable()
+    {
+        nextTabAction.performed -= _ => SwitchToNextTab();
+        previousTabAction.performed -= _ => SwitchToPreviousTab();
+
+        nextTabAction.Disable();
+        previousTabAction.Disable();
+    }
+
     private void Start()
     {
+        tabButtonScripts = new _TabButton[tabButtons.Length];
+
         for (int i = 0; i < tabButtons.Length; i++)
         {
-            int index = i; // éviter problème de closure dans lambda
+            int index = i;
             tabButtons[i].onClick.AddListener(() => SwitchTab(index));
+            tabButtonScripts[i] = tabButtons[i].GetComponent<_TabButton>();
         }
 
         SwitchTab(currentTabIndex);
@@ -21,20 +49,32 @@ public class TabManager : MonoBehaviour
 
     public void SwitchTab(int index)
     {
-        foreach (var content in tabContents)
+        for (int i = 0; i < tabContents.Length; i++)
         {
-            content.SetActive(false);
+            tabContents[i].SetActive(i == index);
         }
-        
-        tabContents[index].SetActive(true);
 
-        for (int i = 0; i < tabButtons.Length; i++)
+        for (int i = 0; i < tabButtonScripts.Length; i++)
         {
-            var colorBlock = tabButtons[i].colors;
-            colorBlock.normalColor = (i == index) ? Color.green : Color.white;
-            tabButtons[i].colors = colorBlock;
+            if (tabButtonScripts[i] != null)
+                tabButtonScripts[i].SetActive(i == index);
         }
 
         currentTabIndex = index;
+
+        // Focus un élément dans l'onglet
+        // EventSystem.current.SetSelectedGameObject
+    }
+
+    private void SwitchToNextTab()
+    {
+        int nextIndex = (currentTabIndex + 1) % tabButtons.Length;
+        SwitchTab(nextIndex);
+    }
+
+    private void SwitchToPreviousTab()
+    {
+        int prevIndex = (currentTabIndex - 1 + tabButtons.Length) % tabButtons.Length;
+        SwitchTab(prevIndex);
     }
 }
