@@ -46,26 +46,6 @@ public class DevConsole : MonoBehaviour
         {
             SubmitCommand(inputField.text);
         }
-
-        // Navigate history with arrow keys
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (commandHistory.Count > 0)
-            {
-                historyIndex = Mathf.Clamp(historyIndex - 1, 0, commandHistory.Count - 1);
-                inputField.text = commandHistory[historyIndex];
-                inputField.MoveTextEnd(false);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (commandHistory.Count > 0)
-            {
-                historyIndex = Mathf.Clamp(historyIndex + 1, 0, commandHistory.Count - 1);
-                inputField.text = commandHistory[historyIndex];
-                inputField.MoveTextEnd(false);
-            }
-        }
     }
 
     private void ToggleConsole()
