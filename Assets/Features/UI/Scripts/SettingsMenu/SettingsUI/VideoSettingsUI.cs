@@ -3,11 +3,12 @@ using UnityEngine;
 public class VideoSettingsUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    public SettingsCategory categoryAsset;
+    public SettingsCategory[] categoryAssets;
     public Transform contentPanel;
     public GameObject paramSliderPrefab;
     public GameObject paramTogglePrefab;
     public GameObject paramDropdownPrefab;
+    public GameObject separatorPrefab; // GraphicsSep (opti needed)
 
     private SettingsData settingsData;
 
@@ -19,19 +20,28 @@ public class VideoSettingsUI : MonoBehaviour
 
     private void GenerateUI()
     {
-        foreach (var param in categoryAsset.parameters)
+        for (int i = 0; i < categoryAssets.Length; i++)
         {
-            if (param.type == ParamType.Slider)
+            var category = categoryAssets[i];
+            foreach (var param in category.parameters)
             {
-                HandleSlider(param);
+                switch (param.type)
+                {
+                    case ParamType.Slider:
+                        HandleSlider(param);
+                        break;
+                    case ParamType.Toggle:
+                        HandleToggle(param);
+                        break;
+                    case ParamType.Dropdown:
+                        HandleDropdown(param);
+                        break;
+                }
             }
-            else if (param.type == ParamType.Toggle)
+
+            if (i < categoryAssets.Length - 1 && separatorPrefab != null)
             {
-                HandleToggle(param);
-            }
-            else if (param.type == ParamType.Dropdown)
-            {
-                HandleDropdown(param);
+                Instantiate(separatorPrefab, contentPanel);
             }
         }
     }
