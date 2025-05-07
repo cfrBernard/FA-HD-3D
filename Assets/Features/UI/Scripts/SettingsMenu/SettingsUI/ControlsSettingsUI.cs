@@ -49,7 +49,7 @@ public class ControlsSettingsUI : MonoBehaviour
         GenerateUI("Gamepad", gamepadPanel);
     }
 
-    // Génère l'UI pour les ControlsParam
+    // Generates the UI for the ControlsParam
     private void GenerateParams(SettingsCategory category, Transform targetPanel)
     {
         foreach (var param in category.parameters)
@@ -102,7 +102,7 @@ public class ControlsSettingsUI : MonoBehaviour
         }
     }
 
-    // Génère l'UI pour les rebinding
+    // Generates the UI for rebinding
     void GenerateUI(string deviceGroup, GameObject targetPanel)
     {
         foreach (var map in inputActions.actionMaps)
@@ -142,7 +142,7 @@ public class ControlsSettingsUI : MonoBehaviour
         }
     }
 
-    // Génère l'UI pour les rebinding (composite)
+    // Generates the UI for rebinding (composite)
     private void GenerateCompositeBindings(InputAction action, string deviceGroup, GameObject targetPanel)
     {
         for (int i = 0; i < action.bindings.Count; i++)
@@ -150,7 +150,7 @@ public class ControlsSettingsUI : MonoBehaviour
             var binding = action.bindings[i];
             if (!binding.isComposite) continue;
     
-            i++; // passer au premier partOfComposite
+            i++; // go to the first partOfComposite
     
             Dictionary<string, List<int>> compositeParts = new();
             
@@ -167,9 +167,9 @@ public class ControlsSettingsUI : MonoBehaviour
                 i++;
             }
     
-            i--; // Corrige l’index après avoir lu tous les partOfComposite
+            i--; // Fix the index after reading all partOfComposite
     
-            // instancie 1 bouton par direction
+            // instantiates 1 prefab per direction
             foreach (var kvp in compositeParts)
             {
                 string direction = kvp.Key;

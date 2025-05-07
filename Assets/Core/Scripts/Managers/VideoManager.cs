@@ -20,8 +20,8 @@ public class VideoManager : MonoBehaviour
     private void Start()
     {
         SettingsData data = SettingsManager.Instance.GetSettingsData();
-        ApplyVideoSettings(data);
-        ApplyGraphicsSettings(data);
+        ApplyVideoSettings(data); // Abstract
+        ApplyGraphicsSettings(data); // Abstract 
     }
 
     public void ApplyVideoSettings(SettingsData data)
@@ -33,7 +33,7 @@ public class VideoManager : MonoBehaviour
 
         // VSync
         QualitySettings.vSyncCount = video.vsync ? 1 : 0;
-        Debug.Log("VSync count set to: " + QualitySettings.vSyncCount);
+        Debug.Log("[VideoManager] VSync count set to: " + QualitySettings.vSyncCount);
 
         // Framerate cap
         TargetFramerate targetFramerate = TargetFramerateFromIndex((int)video.targetFramerate);
@@ -91,12 +91,12 @@ public class VideoManager : MonoBehaviour
         if (QualitySettings.vSyncCount > 0)
         {
             Application.targetFrameRate = -1;
-            Debug.Log("VSync is active, targetFrameRate ignored");
+            Debug.Log("[VideoManager] VSync is active, targetFrameRate ignored");
         }
         else
         {
             Application.targetFrameRate = fpsValue;
-            Debug.Log("Frame cap set to: " + fpsValue);
+            Debug.Log("[VideoManager] Frame cap set to: " + fpsValue);
         }
     }
 
@@ -135,6 +135,6 @@ public class VideoManager : MonoBehaviour
         // Placeholder: this depends on your pipeline
         // Example:
         // URPRenderer.SetAntiAliasing(aa);
-        Debug.Log($"AntiAliasing set to: {aa}");
+        Debug.Log($"[VideoManager] AntiAliasing set to: {aa}");
     }
 }

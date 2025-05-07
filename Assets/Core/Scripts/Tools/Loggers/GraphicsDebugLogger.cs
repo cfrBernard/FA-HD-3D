@@ -61,6 +61,6 @@ public class GraphicsDebugLogger : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "GraphicsDebugLog.txt");
         File.WriteAllText(path, sb.ToString());
 
-        Debug.Log($"Graphics debug info written to: {path}");
+        Debug.Log($"[GraphicsDebugLogger] Graphics debug info written to: {path}");
     }
 }
