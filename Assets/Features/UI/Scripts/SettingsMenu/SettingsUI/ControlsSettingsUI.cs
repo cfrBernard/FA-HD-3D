@@ -37,7 +37,6 @@ public class ControlsSettingsUI : MonoBehaviour
             Debug.LogWarning("[ControlsSettingsUI] No binding overrides found. Will use InputActionAsset defaults.");
         }
 
-
         settingsData = SettingsManager.Instance.GetSettingsData();
 
         GenerateParams(kbmCategory, keyboardPanel.transform);
