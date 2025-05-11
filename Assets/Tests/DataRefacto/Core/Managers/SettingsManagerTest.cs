@@ -39,7 +39,7 @@ public class SettingsManagerTest : MonoBehaviour
         TextAsset defaultAsset = Resources.Load<TextAsset>(DefaultSettingsPath);
         if (defaultAsset == null)
         {
-            Debug.LogError("[SettingsManager] DefaultSettings.json not found in Resources/");
+            Debug.LogError("[SettingsManagerTest] DefaultSettings.json not found in Resources/");
             return;
         }
         defaultSettings = JObject.Parse(defaultAsset.text);
@@ -50,25 +50,19 @@ public class SettingsManagerTest : MonoBehaviour
             string userJson = File.ReadAllText(GetUserSettingsPath());
             userSettings = JObject.Parse(userJson);
         }
-        else
+        else // write empty override
         {
             userSettings = new JObject();
-            Save(); // write empty override file
+            Save(); 
         }
 
-        ApplySettings();
+        ApplySettings(); // too early? (fix: "X"Manager.start())
     }
 
     public void ApplySettings()
     {
-        // TESTING
-        float fov = GetSetting<float>("gameplay.fov", "default");
-        Debug.Log($"[SettingsManager] Applied FOV: {fov}");
-
-        // AudioManager.Instance?.UpdateVolumes(data??);
-        // VideoManager.Instance?.ApplyVideoSettings(data??);
-        // VideoManager.Instance?.ApplyGraphicsSettings(data??);
-        // InputManager.Instance?.UpdateBindings(data??);
+        // TESTING v2
+        AudioManagerTest.Instance?.UpdateVolumes();
     }
 
     public void Save()
@@ -88,6 +82,12 @@ public class SettingsManagerTest : MonoBehaviour
         ApplySettings();
     }
 
+    # region Get/Set
+    public JObject GetDefaultSettings()
+    {
+        return defaultSettings;
+    }
+
     public JObject GetRawSettings()
     {
         return userSettings;
@@ -105,7 +105,7 @@ public class SettingsManagerTest : MonoBehaviour
         if (defaultToken != null)
             return defaultToken.Value<T>();
 
-        Debug.LogWarning($"[SettingsManager] Setting not found: {path}.{field}");
+        Debug.LogWarning($"[SettingsManagerTest] Setting not found: {path}.{field}");
         return default;
     }
 
@@ -113,44 +113,27 @@ public class SettingsManagerTest : MonoBehaviour
     {
         var sections = path.Split('.');
         JObject current = userSettings;
-
+    
         foreach (var section in sections)
         {
             if (current[section] == null)
                 current[section] = new JObject();
-
+    
             current = (JObject)current[section];
         }
-
-        current[field] = JToken.FromObject(value);
+    
+        // Créer une structure { field: value } si c'est un simple champ
+        if (current[field] == null || current[field].Type != JTokenType.Object)
+        {
+            current[field] = new JObject
+            {
+                ["default"] = JToken.FromObject(value)
+            };
+        }
+        else
+        {
+            current[field]["default"] = JToken.FromObject(value);  // par défaut
+        }
     }
-
-    // TESTING
-    #if UNITY_EDITOR
-    private void OnGUI()
-    {
-        GUI.BeginGroup(new Rect(10, 10, 300, 130), "Settings Debug", GUI.skin.window);
-
-        if (GUI.Button(new Rect(10, 20, 280, 30), "Reset Settings"))
-        {
-            ResetSettings();
-        }
-
-        if (GUI.Button(new Rect(10, 60, 280, 30), "Print Current FOV"))
-        {
-            float fov = GetSetting<float>("gameplay.fov", "default");
-            Debug.Log("[SettingsManager][DebugGUI] Current FOV: " + fov);
-        }
-
-        if (GUI.Button(new Rect(10, 100, 280, 30), "Override FOV to 110"))
-        {
-            SetOverride("gameplay.fov", "default", 110f);
-            Save();
-            Debug.Log("[SettingsManager][DebugGUI] FOV overridden and saved.");
-        }
-
-        GUI.EndGroup();
-    }
-    #endif
-
+    # endregion
 }

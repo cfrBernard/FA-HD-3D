@@ -1250,55 +1250,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 103939470}
   m_CullTransparentMesh: 1
---- !u!1 &107574440
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 107574441}
-  - component: {fileID: 107574442}
-  m_Layer: 0
-  m_Name: AudioSettingsUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &107574441
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107574440}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2080253547}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &107574442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107574440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aaad16a7c19c6a4287ee007fe0a15eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  categoryAsset: {fileID: 11400000, guid: 78afeaf94185f5f45b93bd58cafd60e4, type: 2}
-  contentPanel: {fileID: 518367157}
-  paramSliderPrefab: {fileID: 4795713966764395337, guid: 3f99cd26a1234c64f9ca9f2068fb50c7, type: 3}
-  paramTogglePrefab: {fileID: 6453975492436170387, guid: ccb26743f0043b24284af6d95ad24d40, type: 3}
-  paramDropdownPrefab: {fileID: 8727441184662326025, guid: f2d84517a6aaedc43b5b5386a216a68c, type: 3}
 --- !u!1 &115363666
 GameObject:
   m_ObjectHideFlags: 0
@@ -8524,7 +8475,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1487291907}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &895259979
@@ -14001,6 +13953,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480956156}
   m_CullTransparentMesh: 1
+--- !u!1 &1487291906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1487291907}
+  - component: {fileID: 1487291908}
+  m_Layer: 0
+  m_Name: AudioSettingsUITest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1487291907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487291906}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 895259978}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1487291908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487291906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5fce16b1c6f2234d9d3110fb86e8f8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentPanel: {fileID: 518367157}
+  paramSliderPrefab: {fileID: 4795713966764395337, guid: 3f99cd26a1234c64f9ca9f2068fb50c7, type: 3}
+  paramTogglePrefab: {fileID: 6453975492436170387, guid: ccb26743f0043b24284af6d95ad24d40, type: 3}
+  paramDropdownPrefab: {fileID: 8727441184662326025, guid: f2d84517a6aaedc43b5b5386a216a68c, type: 3}
 --- !u!1 &1489847539
 GameObject:
   m_ObjectHideFlags: 0
@@ -18683,7 +18683,6 @@ Transform:
   - {fileID: 1190962135}
   - {fileID: 1822596503}
   - {fileID: 2064311900}
-  - {fileID: 107574441}
   - {fileID: 205295617}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

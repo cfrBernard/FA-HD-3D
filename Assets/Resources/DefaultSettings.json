@@ -106,7 +106,7 @@
       "min": 0,
       "max": 100,
       "default": 100,
-      "decimal": true
+      "decimal": false
     },
     "musicVolume": {
       "label": "Music Volume",
@@ -115,16 +115,16 @@
       "min": 0,
       "max": 100,
       "default": 100,
-      "decimal": true
+      "decimal": false
     },
     "sfxVolume": {
-      "label": "SFX Volume",
+      "label": "Effects Volume",
       "description": "Controls sound effects volume.",
       "type": "slider",
       "min": 0,
       "max": 100,
       "default": 100,
-      "decimal": true
+      "decimal": false
     },
     "envVolume": {
       "label": "Environment Volume",
@@ -133,22 +133,16 @@
       "min": 0,
       "max": 100,
       "default": 100,
-      "decimal": true
+      "decimal": false
     },
     "uiVolume": {
-      "label": "UI Volume",
+      "label": "Interface Volume",
       "description": "Controls user interface sound volume.",
       "type": "slider",
       "min": 0,
       "max": 100,
       "default": 100,
-      "decimal": true
-    },
-    "muteAll": {
-      "label": "Mute All",
-      "description": "Mutes all game sounds.",
-      "type": "toggle",
-      "default": false
+      "decimal": false
     }
   },
   "kbm": {
