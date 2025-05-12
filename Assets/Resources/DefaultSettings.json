@@ -3,9 +3,9 @@
     "fov": 90
   },
   "video": {
-    "resolution": "R1920x1080",
+    "resolution": "1920x1080",
     "fullscreen": true,
-    "targetFramerate": "FPS60",
+    "targetFramerate": "60FPS",
     "vsync": false
   },
   "graphics": {
@@ -41,5 +41,8 @@
     "invertStickY": false,
     "deadzoneLeft": 0.1,
     "deadzoneRight": 0.1
+  },
+  "inputBindings": {
+    "inputActionOverridesJson": ""
   }
 }

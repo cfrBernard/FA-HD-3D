@@ -13,7 +13,7 @@
       "label": "Resolution",
       "description": "Sets the display resolution.",
       "type": "dropdown",
-      "options": ["R1280x720", "R1920x1080", "R2560x1440", "R3840x2160"]
+      "options": ["1280x720", "1920x1080", "2560x1440", "3840x2160"]
     },
     "fullscreen": {
       "label": "Fullscreen",
@@ -24,7 +24,7 @@
       "label": "Target Framerate",
       "description": "Limits the game's framerate.",
       "type": "dropdown",
-      "options": ["FPS30", "FPS60", "FPS120", "FPS144", "FPS240", "Unlimited"]
+      "options": ["30FPS", "60FPS", "120FPS", "144FPS", "240FPS", "Unlimited"]
     },
     "vsync": {
       "label": "V-Sync",
