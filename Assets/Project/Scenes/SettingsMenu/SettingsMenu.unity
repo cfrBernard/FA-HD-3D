@@ -7626,6 +7626,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 758649272}
   m_CullTransparentMesh: 1
+--- !u!1 &773766854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 773766855}
+  - component: {fileID: 773766856}
+  m_Layer: 0
+  m_Name: GameplaySettingsUITest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &773766855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773766854}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 895259978}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &773766856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773766854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f0048beaec923e4e80e92c7dbf89130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentPanel: {fileID: 512623058}
+  paramSliderPrefab: {fileID: 4795713966764395337, guid: 3f99cd26a1234c64f9ca9f2068fb50c7, type: 3}
+  paramTogglePrefab: {fileID: 6453975492436170387, guid: ccb26743f0043b24284af6d95ad24d40, type: 3}
+  paramDropdownPrefab: {fileID: 8727441184662326025, guid: f2d84517a6aaedc43b5b5386a216a68c, type: 3}
 --- !u!1 &802804458
 GameObject:
   m_ObjectHideFlags: 0
@@ -8477,6 +8525,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1487291907}
+  - {fileID: 773766855}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &895259979
@@ -16935,55 +16984,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813188748}
   m_CullTransparentMesh: 1
---- !u!1 &1822596502
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1822596503}
-  - component: {fileID: 1822596504}
-  m_Layer: 0
-  m_Name: GameplaySettingsUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1822596503
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822596502}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2080253547}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1822596504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822596502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899c4e6a25648d64581101997e77089f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  categoryAsset: {fileID: 11400000, guid: c0577f1a468f0eb49afde683b05cca84, type: 2}
-  contentPanel: {fileID: 512623058}
-  paramSliderPrefab: {fileID: 4795713966764395337, guid: 3f99cd26a1234c64f9ca9f2068fb50c7, type: 3}
-  paramTogglePrefab: {fileID: 6453975492436170387, guid: ccb26743f0043b24284af6d95ad24d40, type: 3}
-  paramDropdownPrefab: {fileID: 8727441184662326025, guid: f2d84517a6aaedc43b5b5386a216a68c, type: 3}
 --- !u!1 &1842692488
 GameObject:
   m_ObjectHideFlags: 0
@@ -18681,7 +18681,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1190962135}
-  - {fileID: 1822596503}
   - {fileID: 2064311900}
   - {fileID: 205295617}
   m_Father: {fileID: 0}
