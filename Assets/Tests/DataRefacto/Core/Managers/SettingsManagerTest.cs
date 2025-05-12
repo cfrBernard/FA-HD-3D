@@ -8,15 +8,15 @@ public class SettingsManagerTest : MonoBehaviour
 
     private JObject defaultSettings;
     private JObject userSettings;
-
+    private JObject metadataSettings;
     
-    // Paths
     private const string DefaultSettingsPath = "DefaultSettings";
+    private const string MetadataSettingsPath = "MetadataSettings";
+
     private string GetUserSettingsPath()
     {
         return Path.Combine(Application.persistentDataPath, "UserSettings.json");
     }
-    
 
     private void Awake()
     {
@@ -44,6 +44,15 @@ public class SettingsManagerTest : MonoBehaviour
         }
         defaultSettings = JObject.Parse(defaultAsset.text);
 
+        // Load metadata from Resources
+        TextAsset metadataAsset = Resources.Load<TextAsset>(MetadataSettingsPath);
+        if (metadataAsset == null)
+        {
+            Debug.LogError("[SettingsManagerTest] MetadataSettings.json not found in Resources/");
+            return;
+        }
+        metadataSettings = JObject.Parse(metadataAsset.text);
+
         // Load user overrides if exists
         if (File.Exists(GetUserSettingsPath()))
         {
@@ -53,7 +62,7 @@ public class SettingsManagerTest : MonoBehaviour
         else // write empty override
         {
             userSettings = new JObject();
-            Save(); 
+            Save();
         }
 
         ApplySettings(); // too early? (fix: "X"Manager.start())
@@ -82,10 +91,15 @@ public class SettingsManagerTest : MonoBehaviour
         ApplySettings();
     }
 
-    # region Get/Set
+    #region Get/Set
     public JObject GetDefaultSettings()
     {
         return defaultSettings;
+    }
+
+    public JObject GetMetadataSettings()
+    {
+        return metadataSettings;
     }
 
     public JObject GetRawSettings()
@@ -113,27 +127,17 @@ public class SettingsManagerTest : MonoBehaviour
     {
         var sections = path.Split('.');
         JObject current = userSettings;
-    
+
         foreach (var section in sections)
         {
             if (current[section] == null)
                 current[section] = new JObject();
-    
+
             current = (JObject)current[section];
         }
-    
-        // Créer une structure { field: value } si c'est un simple champ
-        if (current[field] == null || current[field].Type != JTokenType.Object)
-        {
-            current[field] = new JObject
-            {
-                ["default"] = JToken.FromObject(value)
-            };
-        }
-        else
-        {
-            current[field]["default"] = JToken.FromObject(value);  // par défaut
-        }
+
+        current[field] = JToken.FromObject(value);
     }
-    # endregion
+    #endregion
 }
+

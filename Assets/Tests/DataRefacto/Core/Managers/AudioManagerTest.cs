@@ -32,17 +32,17 @@ public class AudioManagerTest : MonoBehaviour
     {
         JObject data = SettingsManagerTest.Instance.GetRawSettings();
         JObject audioSettings = data["audio"] as JObject;
-
+        
         ApplyVolumesFromSettings(audioSettings);
     }
 
     private void ApplyVolumesFromSettings(JObject audioSettings)
     {
-        SetMixerVolume("MasterVolume", audioSettings?["masterVolume"]?["default"]?.Value<float>() ?? 100);
-        SetMixerVolume("MusicVolume", audioSettings?["musicVolume"]?["default"]?.Value<float>() ?? 100);
-        SetMixerVolume("SFXVolume", audioSettings?["sfxVolume"]?["default"]?.Value<float>() ?? 100);
-        SetMixerVolume("EnvVolume", audioSettings?["envVolume"]?["default"]?.Value<float>() ?? 100);
-        SetMixerVolume("UIVolume", audioSettings?["uiVolume"]?["default"]?.Value<float>() ?? 100);
+        SetMixerVolume("MasterVolume", audioSettings?["masterVolume"]?.Value<float>() ?? 100);
+        SetMixerVolume("MusicVolume", audioSettings?["musicVolume"]?.Value<float>() ?? 100);
+        SetMixerVolume("SFXVolume", audioSettings?["sfxVolume"]?.Value<float>() ?? 100);
+        SetMixerVolume("EnvVolume", audioSettings?["envVolume"]?.Value<float>() ?? 100);
+        SetMixerVolume("UIVolume", audioSettings?["uiVolume"]?.Value<float>() ?? 100);
     }
 
     private void SetMixerVolume(string exposedParam, float sliderValue)
@@ -58,3 +58,4 @@ public class AudioManagerTest : MonoBehaviour
         return Mathf.Lerp(-80f, 0f, normalized);
     }
 }
+

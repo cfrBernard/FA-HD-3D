@@ -1,245 +1,45 @@
 {
   "gameplay": {
-    "fov": {
-      "label": "Field of View",
-      "description": "Adjusts how wide the player's view is.",
-      "type": "slider",
-      "min": 60,
-      "max": 120,
-      "default": 90,
-      "decimal": true
-    }
+    "fov": 90
   },
   "video": {
-    "resolution": {
-      "label": "Resolution",
-      "description": "Sets the display resolution.",
-      "type": "dropdown",
-      "options": ["R1280x720", "R1920x1080", "R2560x1440", "R3840x2160"],
-      "default": "R1920x1080"
-    },
-    "fullscreen": {
-      "label": "Fullscreen",
-      "description": "Enable or disable fullscreen mode.",
-      "type": "toggle",
-      "default": true
-    },
-    "targetFramerate": {
-      "label": "Target Framerate",
-      "description": "Limits the game's framerate.",
-      "type": "dropdown",
-      "options": ["FPS30", "FPS60", "FPS120", "FPS144", "FPS240", "Unlimited"],
-      "default": "FPS60"
-    },
-    "vsync": {
-      "label": "V-Sync",
-      "description": "Synchronize the framerate with your monitor's refresh rate.",
-      "type": "toggle",
-      "default": false
-    }
+    "resolution": "R1920x1080",
+    "fullscreen": true,
+    "targetFramerate": "FPS60",
+    "vsync": false
   },
   "graphics": {
-    "qualityPreset": {
-      "label": "Graphics Quality",
-      "description": "Applies an overall graphics quality preset.",
-      "type": "dropdown",
-      "options": ["Low", "Medium", "High", "Ultra"],
-      "default": "High"
-    },
-    "textureQuality": {
-      "label": "Texture Quality",
-      "description": "Sets the quality of in-game textures.",
-      "type": "dropdown",
-      "options": ["Low", "Medium", "High"],
-      "default": "High"
-    },
-    "shadowQuality": {
-      "label": "Shadow Quality",
-      "description": "Adjusts the quality of shadows.",
-      "type": "dropdown",
-      "options": ["Off", "Low", "High"],
-      "default": "High"
-    },
-    "antiAliasing": {
-      "label": "Anti-Aliasing",
-      "description": "Smooths jagged edges on geometry.",
-      "type": "dropdown",
-      "options": ["None", "FXAA", "TAA"],
-      "default": "TAA"
-    },
-    "postProcessing": {
-      "label": "Post-Processing",
-      "description": "Enable enhanced visual effects like color grading and lens flares.",
-      "type": "toggle",
-      "default": true
-    },
-    "ambientOcclusion": {
-      "label": "Ambient Occlusion",
-      "description": "Adds depth to the scene with realistic shading.",
-      "type": "toggle",
-      "default": true
-    },
-    "motionBlur": {
-      "label": "Motion Blur",
-      "description": "Adds blur when the camera or objects move quickly.",
-      "type": "toggle",
-      "default": false
-    },
-    "bloom": {
-      "label": "Bloom",
-      "description": "Creates a glowing effect around bright areas.",
-      "type": "toggle",
-      "default": true
-    },
-    "depthOfField": {
-      "label": "Depth of Field",
-      "description": "Simulates camera focus effects.",
-      "type": "toggle",
-      "default": true
-    }
+    "qualityPreset": "High",
+    "textureQuality": "High",
+    "shadowQuality": "High",
+    "antiAliasing": "TAA",
+    "postProcessing": true,
+    "ambientOcclusion": true,
+    "motionBlur": false,
+    "bloom": true,
+    "depthOfField": true
   },
   "audio": {
-    "masterVolume": {
-      "label": "Master Volume",
-      "description": "Controls the overall game audio.",
-      "type": "slider",
-      "min": 0,
-      "max": 100,
-      "default": 100,
-      "decimal": false
-    },
-    "musicVolume": {
-      "label": "Music Volume",
-      "description": "Controls music audio level.",
-      "type": "slider",
-      "min": 0,
-      "max": 100,
-      "default": 100,
-      "decimal": false
-    },
-    "sfxVolume": {
-      "label": "Effects Volume",
-      "description": "Controls sound effects volume.",
-      "type": "slider",
-      "min": 0,
-      "max": 100,
-      "default": 100,
-      "decimal": false
-    },
-    "envVolume": {
-      "label": "Environment Volume",
-      "description": "Controls ambient sounds volume.",
-      "type": "slider",
-      "min": 0,
-      "max": 100,
-      "default": 100,
-      "decimal": false
-    },
-    "uiVolume": {
-      "label": "Interface Volume",
-      "description": "Controls user interface sound volume.",
-      "type": "slider",
-      "min": 0,
-      "max": 100,
-      "default": 100,
-      "decimal": false
-    }
+    "masterVolume": 100,
+    "musicVolume": 100,
+    "sfxVolume": 100,
+    "envVolume": 100,
+    "uiVolume": 100
   },
   "kbm": {
-    "mouseSensitivityX": {
-      "label": "Mouse Sensitivity X",
-      "description": "Adjusts horizontal mouse sensitivity.",
-      "type": "slider",
-      "min": 0.01,
-      "max": 5,
-      "default": 1,
-      "decimal": true
-    },
-    "mouseSensitivityY": {
-      "label": "Mouse Sensitivity Y",
-      "description": "Adjusts vertical mouse sensitivity.",
-      "type": "slider",
-      "min": 0.01,
-      "max": 5,
-      "default": 1,
-      "decimal": true
-    },
-    "invertMouseX": {
-      "label": "Invert Mouse X",
-      "description": "Inverts the horizontal mouse movement.",
-      "type": "toggle",
-      "default": false
-    },
-    "invertMouseY": {
-      "label": "Invert Mouse Y",
-      "description": "Inverts the vertical mouse movement.",
-      "type": "toggle",
-      "default": false
-    },
-    "mouseSmoothing": {
-      "label": "Mouse Smoothing",
-      "description": "Applies smoothing to mouse input.",
-      "type": "toggle",
-      "default": false
-    },
-    "smoothingAmount": {
-      "label": "Smoothing Amount",
-      "description": "Controls how much smoothing is applied to mouse input.",
-      "type": "slider",
-      "min": 0.01,
-      "max": 5,
-      "default": 0.5,
-      "decimal": true
-    }
+    "mouseSensitivityX": 1,
+    "mouseSensitivityY": 1,
+    "invertMouseX": false,
+    "invertMouseY": false,
+    "mouseSmoothing": false,
+    "smoothingAmount": 0.5
   },
   "gamepad": {
-    "stickSensitivityX": {
-      "label": "Stick Sensitivity X",
-      "description": "Adjusts horizontal stick sensitivity.",
-      "type": "slider",
-      "min": 0.01,
-      "max": 5,
-      "default": 1,
-      "decimal": true
-    },
-    "stickSensitivityY": {
-      "label": "Stick Sensitivity Y",
-      "description": "Adjusts vertical stick sensitivity.",
-      "type": "slider",
-      "min": 0.01,
-      "max": 5,
-      "default": 1,
-      "decimal": true
-    },
-    "invertStickX": {
-      "label": "Invert Stick X",
-      "description": "Inverts the horizontal stick movement.",
-      "type": "toggle",
-      "default": false
-    },
-    "invertStickY": {
-      "label": "Invert Stick Y",
-      "description": "Inverts the vertical stick movement.",
-      "type": "toggle",
-      "default": false
-    },
-    "deadzoneLeft": {
-      "label": "Left Stick Deadzone",
-      "description": "Sets the deadzone for the left stick.",
-      "type": "slider",
-      "min": 0.01,
-      "max": 1,
-      "default": 0.1,
-      "decimal": true
-    },
-    "deadzoneRight": {
-      "label": "Right Stick Deadzone",
-      "description": "Sets the deadzone for the right stick.",
-      "type": "slider",
-      "min": 0.01,
-      "max": 1,
-      "default": 0.1,
-      "decimal": true
-    }
+    "stickSensitivityX": 1,
+    "stickSensitivityY": 1,
+    "invertStickX": false,
+    "invertStickY": false,
+    "deadzoneLeft": 0.1,
+    "deadzoneRight": 0.1
   }
 }

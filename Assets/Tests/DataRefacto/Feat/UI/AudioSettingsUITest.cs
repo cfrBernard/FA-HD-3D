@@ -16,37 +16,49 @@ public class AudioSettingsUITest : MonoBehaviour
 
     private void GenerateUI()
     {
-        JObject audioSettings = SettingsManagerTest.Instance.GetRawSettings()["audio"] as JObject;
-        JObject audioDefaults  = SettingsManagerTest.Instance.GetDefaultSettings()["audio"] as JObject;
+        JObject metadata = Resources.Load<TextAsset>("MetadataSettings") is TextAsset metaAsset
+            ? JObject.Parse(metaAsset.text)?["audio"] as JObject
+            : null;
 
-        foreach (var pair in audioDefaults)
+        if (metadata == null)
+        {
+            Debug.LogError("[AudioSettingsUITest] Metadata not found or invalid for audio.");
+            return;
+        }
+
+        foreach (var pair in metadata)
         {
             string key = pair.Key;
             JObject param = pair.Value as JObject;
+            if (param == null) continue;
+
             string type = param["type"]?.ToString();
+            string label = param["label"]?.ToString() ?? key;
 
             switch (type)
             {
                 case "slider":
-                    float value = audioSettings?[key]?["default"]?.Value<float>()
-                        ?? param["default"].Value<float>();
-                    CreateSlider(param, key, value);
+                    float sliderValue = SettingsManagerTest.Instance.GetSetting<float>("audio", key);
+                    CreateSlider(param, key, sliderValue);
                     break;
 
                 case "toggle":
-                    bool toggleValue = audioSettings?[key]?["default"]?.Value<bool>()
-                        ?? param["default"].Value<bool>();
+                    bool toggleValue = SettingsManagerTest.Instance.GetSetting<bool>("audio", key);
                     CreateToggle(param, key, toggleValue);
                     break;
 
                 case "dropdown":
-                    string current = audioSettings?[key]?["default"]?.ToString()
-                        ?? param["default"].ToString();
-                    CreateDropdown(param, key, current);
+                    string dropdownValue = SettingsManagerTest.Instance.GetSetting<string>("audio", key);
+                    CreateDropdown(param, key, dropdownValue);
+                    break;
+
+                default:
+                    Debug.LogWarning($"[AudioSettingsUITest] Unknown type '{type}' for setting '{key}'.");
                     break;
             }
         }
     }
+
 
     private void CreateSlider(JObject param, string key, float currentValue)
     {
@@ -99,3 +111,4 @@ public class AudioSettingsUITest : MonoBehaviour
         SettingsManagerTest.Instance.ApplySettings();
     }
 }
+
