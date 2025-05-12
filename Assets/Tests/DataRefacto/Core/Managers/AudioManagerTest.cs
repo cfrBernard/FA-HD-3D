@@ -30,19 +30,16 @@ public class AudioManagerTest : MonoBehaviour
 
     public void UpdateVolumes()
     {
-        JObject data = SettingsManagerTest.Instance.GetRawSettings();
-        JObject audioSettings = data["audio"] as JObject;
-        
-        ApplyVolumesFromSettings(audioSettings);
+        ApplyVolumesFromSettings();
     }
 
-    private void ApplyVolumesFromSettings(JObject audioSettings)
+    private void ApplyVolumesFromSettings()
     {
-        SetMixerVolume("MasterVolume", audioSettings?["masterVolume"]?.Value<float>() ?? 100);
-        SetMixerVolume("MusicVolume", audioSettings?["musicVolume"]?.Value<float>() ?? 100);
-        SetMixerVolume("SFXVolume", audioSettings?["sfxVolume"]?.Value<float>() ?? 100);
-        SetMixerVolume("EnvVolume", audioSettings?["envVolume"]?.Value<float>() ?? 100);
-        SetMixerVolume("UIVolume", audioSettings?["uiVolume"]?.Value<float>() ?? 100);
+        SetMixerVolume("MasterVolume", GetAudioSetting("masterVolume"));
+        SetMixerVolume("MusicVolume", GetAudioSetting("musicVolume"));
+        SetMixerVolume("SFXVolume", GetAudioSetting("sfxVolume"));
+        SetMixerVolume("EnvVolume", GetAudioSetting("envVolume"));
+        SetMixerVolume("UIVolume", GetAudioSetting("uiVolume"));
     }
 
     private void SetMixerVolume(string exposedParam, float sliderValue)
@@ -56,6 +53,19 @@ public class AudioManagerTest : MonoBehaviour
         if (sliderValue <= 0f) return -80f;
         float normalized = sliderValue / 100f;
         return Mathf.Lerp(-80f, 0f, normalized);
+    }
+
+    private float GetAudioSetting(string field, float defaultValue = 100f)
+    {
+        try
+        {
+            return SettingsManagerTest.Instance.GetSetting<float>("audio", field);
+        }
+        catch
+        {
+            Debug.LogWarning($"[AudioManagerTest] Audio setting '{field}' missing, using default value : {defaultValue}");
+            return defaultValue;
+        }
     }
 }
 

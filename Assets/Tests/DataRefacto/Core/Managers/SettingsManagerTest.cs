@@ -72,6 +72,8 @@ public class SettingsManagerTest : MonoBehaviour
     {
         // TESTING v2
         AudioManagerTest.Instance?.UpdateVolumes();
+        VideoManager.Instance?.ApplyVideoSettings();
+        VideoManager.Instance?.ApplyGraphicsSettings();
     }
 
     public void Save()
