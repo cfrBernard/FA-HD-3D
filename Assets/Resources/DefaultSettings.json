@@ -1,0 +1,48 @@
+{
+  "gameplay": {
+    "fov": 90
+  },
+  "video": {
+    "resolution": "1920x1080",
+    "fullscreen": true,
+    "targetFramerate": "60FPS",
+    "vsync": false
+  },
+  "graphics": {
+    "qualityPreset": "High",
+    "textureQuality": "High",
+    "shadowQuality": "High",
+    "antiAliasing": "TAA",
+    "postProcessing": true,
+    "ambientOcclusion": true,
+    "motionBlur": false,
+    "bloom": true,
+    "depthOfField": true
+  },
+  "audio": {
+    "masterVolume": 100,
+    "musicVolume": 100,
+    "sfxVolume": 100,
+    "envVolume": 100,
+    "uiVolume": 100
+  },
+  "kbm": {
+    "mouseSensitivityX": 1,
+    "mouseSensitivityY": 1,
+    "invertMouseX": false,
+    "invertMouseY": false,
+    "mouseSmoothing": false,
+    "smoothingAmount": 0.5
+  },
+  "gamepad": {
+    "stickSensitivityX": 1,
+    "stickSensitivityY": 1,
+    "invertStickX": false,
+    "invertStickY": false,
+    "deadzoneLeft": 0.1,
+    "deadzoneRight": 0.1
+  },
+  "inputBindings": {
+    "inputActionOverridesJson": ""
+  }
+}

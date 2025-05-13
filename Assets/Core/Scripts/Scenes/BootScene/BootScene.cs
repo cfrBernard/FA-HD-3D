@@ -26,7 +26,6 @@ public class BootScene : MonoBehaviour
     private VideoManager videoManager;
     private ToolsManager toolsManager;
     private FPSDisplay _FPSDisplay;
-    
 
     #region BootSequence
     private void Start()

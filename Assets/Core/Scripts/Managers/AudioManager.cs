@@ -24,48 +24,47 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        SettingsData data = SettingsManager.Instance.GetSettingsData();
-        UpdateVolumes(data);
+        UpdateVolumes();
     }
 
-    public void UpdateVolumes(SettingsData data)
+    public void UpdateVolumes()
     {
-        if (data.audio.muteAll)
-        {
-            SetVolumeToMute();
-        }
-        else
-        {
-            SetVolumeFromSliderValues(data);
-        }
+        ApplyVolumesFromSettings();
     }
 
-    private void SetVolumeToMute()
+    private void ApplyVolumesFromSettings()
     {
-        audioMixer.SetFloat("MasterVolume", ConvertToDB(0));
-        audioMixer.SetFloat("MusicVolume", ConvertToDB(0)); 
-        audioMixer.SetFloat("SFXVolume", ConvertToDB(0)); 
-        audioMixer.SetFloat("EnvVolume", ConvertToDB(0)); 
-        audioMixer.SetFloat("UIVolume", ConvertToDB(0)); 
+        SetMixerVolume("MasterVolume", GetAudioSetting("masterVolume"));
+        SetMixerVolume("MusicVolume", GetAudioSetting("musicVolume"));
+        SetMixerVolume("SFXVolume", GetAudioSetting("sfxVolume"));
+        SetMixerVolume("EnvVolume", GetAudioSetting("envVolume"));
+        SetMixerVolume("UIVolume", GetAudioSetting("uiVolume"));
     }
 
-    private void SetVolumeFromSliderValues(SettingsData data)
+    private void SetMixerVolume(string exposedParam, float sliderValue)
     {
-        audioMixer.SetFloat("MasterVolume", ConvertToDB(data.audio.masterVolume));
-        audioMixer.SetFloat("MusicVolume", ConvertToDB(data.audio.musicVolume));
-        audioMixer.SetFloat("SFXVolume", ConvertToDB(data.audio.sfxVolume));
-        audioMixer.SetFloat("EnvVolume", ConvertToDB(data.audio.envVolume));
-        audioMixer.SetFloat("UIVolume", ConvertToDB(data.audio.uiVolume));
+        float db = ConvertToDB(sliderValue);
+        audioMixer.SetFloat(exposedParam, db);
     }
 
     private float ConvertToDB(float sliderValue)
     {
-        if (sliderValue <= 0) return -80f;
+        if (sliderValue <= 0f) return -80f;
+        float normalized = sliderValue / 100f;
+        return Mathf.Lerp(-80f, 0f, normalized);
+    }
 
-        // Normalise 0-100 en ratio entre 0 et 1
-        float normalizedValue = sliderValue / 100f;
-
-        // Interpolation linéaire entre -80 dB et 0 dB
-        return Mathf.Lerp(-80f, 0f, normalizedValue);
+    private float GetAudioSetting(string field, float defaultValue = 100f)
+    {
+        try
+        {
+            return SettingsManager.Instance.GetSetting<float>("audio", field);
+        }
+        catch
+        {
+            Debug.LogWarning($"[AudioManager] Audio setting '{field}' missing, using default value : {defaultValue}");
+            return defaultValue;
+        }
     }
 }
+

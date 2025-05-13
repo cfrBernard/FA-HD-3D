@@ -19,122 +19,95 @@ public class VideoManager : MonoBehaviour
 
     private void Start()
     {
-        SettingsData data = SettingsManager.Instance.GetSettingsData();
-        ApplyVideoSettings(data);
-        ApplyGraphicsSettings(data);
+        ApplyVideoSettings(); // Abstract
+        ApplyGraphicsSettings(); // Abstract 
     }
 
-    public void ApplyVideoSettings(SettingsData data)
+    public void ApplyVideoSettings()
     {
-        VideoSettings video = data.video;
+        string resolution = SettingsManager.Instance.GetSetting<string>("video", "resolution");
+        bool fullscreen = SettingsManager.Instance.GetSetting<bool>("video", "fullscreen");
+        string framerateStr = SettingsManager.Instance.GetSetting<string>("video", "targetFramerate");
+        bool vsync = SettingsManager.Instance.GetSetting<bool>("video", "vsync");
 
-        // Resolution / fullscreen
-        ApplyResolution(video.resolution, video.fullscreen);
-
-        // VSync
-        QualitySettings.vSyncCount = video.vsync ? 1 : 0;
-        Debug.Log("VSync count set to: " + QualitySettings.vSyncCount);
-
-        // Framerate cap
-        TargetFramerate targetFramerate = TargetFramerateFromIndex((int)video.targetFramerate);
-        ApplyTargetFramerate(targetFramerate);
-    }
-
-    public void ApplyGraphicsSettings(SettingsData data) // let him sleep
-    {
-        GraphicsSettings graphics = data.graphics;
-
-        // Quality Preset
-        QualitySettings.SetQualityLevel((int)graphics.qualityPreset);
-
-        // Texture Quality
-        // QualitySettings.globalTextureMipmapLimit: 0 = full res, 1 = half, etc.
-        // QualitySettings.globalTextureMipmapLimit = 2 - (int)graphics.textureQuality;
-
-        // Shadow Quality
-        // TODO: Map shadow setting to Unity shadow options
-        // ApplyShadowQuality(graphics.shadowQuality);
-
-        // AntiAliasing
-        // TODO: Switch render pipeline AA or custom implementation
-        // ApplyAntiAliasing(graphics.antiAliasing);
-
-        // Post FX
-        // TODO: These require Post Processing Volume or URP/HDRP toggle logic
-        // PostProcessingManager.Instance.SetEffect("AO", graphics.ambientOcclusion);
-        // PostProcessingManager.Instance.SetEffect("Bloom", graphics.bloom);
-        // etc.
-    }
-
-    private void ApplyResolution(ResolutionOption option, bool fullscreen)
-    {
-        Resolution res = ResolutionFromOption(option);
-        Screen.SetResolution(res.width, res.height, fullscreen);
-    }
-
-    private Resolution ResolutionFromOption(ResolutionOption option)
-    {
-        return option switch
+        // Résolution
+        string[] resParts = resolution.Split('x');
+        if (resParts.Length == 2 &&
+            int.TryParse(resParts[0], out int width) &&
+            int.TryParse(resParts[1], out int height))
         {
-            ResolutionOption.R1920x1080 => new Resolution { width = 1920, height = 1080 },
-            ResolutionOption.R2560x1440 => new Resolution { width = 2560, height = 1440 },
-            ResolutionOption.R3840x2160 => new Resolution { width = 3840, height = 2160 },
-            ResolutionOption.R1280x720  => new Resolution { width = 1280, height = 720 },
-            _ => Screen.currentResolution
-        };
-    }
-
-    private void ApplyTargetFramerate(TargetFramerate target)
-    {
-        int fpsValue = (int)target;
-
-        if (QualitySettings.vSyncCount > 0)
-        {
-            Application.targetFrameRate = -1;
-            Debug.Log("VSync is active, targetFrameRate ignored");
+            Screen.SetResolution(width, height, fullscreen);
         }
         else
         {
-            Application.targetFrameRate = fpsValue;
-            Debug.Log("Frame cap set to: " + fpsValue);
+            Debug.LogWarning("Résolution invalide : " + resolution);
         }
-    }
 
-    private TargetFramerate TargetFramerateFromIndex(int index)
-    {
-        switch (index)
+        // VSync
+        QualitySettings.vSyncCount = vsync ? 1 : 0;
+
+        // Framerate
+        if (int.TryParse(framerateStr.Replace("FPS", ""), out int targetFPS))
         {
-            case 0: return TargetFramerate.FPS30;
-            case 1: return TargetFramerate.FPS60;
-            case 2: return TargetFramerate.FPS120;
-            case 3: return TargetFramerate.FPS144;
-            case 4: return TargetFramerate.FPS240;
-            case 5: return TargetFramerate.Unlimited;
-            default: return TargetFramerate.FPS60;
+            Application.targetFrameRate = targetFPS;
         }
-    }
-
-    private void ApplyShadowQuality(ShadowQuality quality)
-    {
-        switch (quality)
+        else
         {
-            case ShadowQuality.Off:
-                QualitySettings.shadows = UnityEngine.ShadowQuality.Disable;
-                break;
-            case ShadowQuality.Low:
-                QualitySettings.shadows = UnityEngine.ShadowQuality.HardOnly;
-                break;
-            case ShadowQuality.High:
-                QualitySettings.shadows = UnityEngine.ShadowQuality.All;
-                break;
+            Debug.LogWarning("Framerate invalide : " + framerateStr);
         }
     }
 
-    private void ApplyAntiAliasing(AntiAliasing aa)
+    public void ApplyGraphicsSettings()
     {
-        // Placeholder: this depends on your pipeline
-        // Example:
-        // URPRenderer.SetAntiAliasing(aa);
-        Debug.Log($"AntiAliasing set to: {aa}");
+        string qualityPreset = SettingsManager.Instance.GetSetting<string>("graphics", "qualityPreset");
+        string textureQuality = SettingsManager.Instance.GetSetting<string>("graphics", "textureQuality");
+        string shadowQuality = SettingsManager.Instance.GetSetting<string>("graphics", "shadowQuality");
+        string antiAliasing = SettingsManager.Instance.GetSetting<string>("graphics", "antiAliasing");
+
+        bool postProcessing = SettingsManager.Instance.GetSetting<bool>("graphics", "postProcessing");
+        bool ambientOcclusion = SettingsManager.Instance.GetSetting<bool>("graphics", "ambientOcclusion");
+        bool motionBlur = SettingsManager.Instance.GetSetting<bool>("graphics", "motionBlur");
+        bool bloom = SettingsManager.Instance.GetSetting<bool>("graphics", "bloom");
+        bool depthOfField = SettingsManager.Instance.GetSetting<bool>("graphics", "depthOfField");
+
+        // Qualité globale
+        QualitySettings.SetQualityLevel(QualityPresetToIndex(qualityPreset), true);
+
+        // Anti-Aliasing
+        // QualitySettings.antiAliasing = AntiAliasingToSampleCount(antiAliasing);
+        Debug.Log("antiAliasing: " + antiAliasing);
+
+        // Shadow & Texture quality
+        Debug.Log("Texture Quality: " + textureQuality);
+        Debug.Log("Shadow Quality: " + shadowQuality);
+
+        // These require Post Processing Volume or URP/HDRP toggle logic
+        Debug.Log($"PostFX - Bloom: {bloom}, DOF: {depthOfField}, AO: {ambientOcclusion}, MotionBlur: {motionBlur}, PostProcessing: {postProcessing}");
+    }
+
+    private int QualityPresetToIndex(string preset)
+    {
+        switch (preset.ToLower())
+        {
+            case "low": return 0;
+            case "medium": return 1;
+            case "high": return 2;
+            case "ultra": return 3;
+            default: return 2; // default to High
+        }
+    }
+
+    private int AntiAliasingToSampleCount(string aa)
+    {
+        switch (aa.ToUpper())
+        {
+            case "NONE": return 0;
+            case "FXAA": return 0; // handled via post-processing
+            case "TAA": return 0;  // handled via post-processing
+            case "2X": return 2;
+            case "4X": return 4;
+            case "8X": return 8;
+            default: return 0;
+        }
     }
 }
