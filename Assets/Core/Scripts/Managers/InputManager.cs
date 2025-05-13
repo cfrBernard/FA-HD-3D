@@ -40,10 +40,10 @@ public class InputManager : MonoBehaviour
         if (action == null) return;
         action.ApplyBindingOverride(bindingIndex, overridePath);
 
-        // Save the override in settings
-        SettingsManager.Instance.GetSettingsData().inputBindings.inputActionOverridesJson =
-            inputActions.SaveBindingOverridesAsJson();
-
-        SettingsManager.Instance.Save();
+        // Save the override in settings via SettingsManagerTest
+        string json = inputActions.SaveBindingOverridesAsJson();
+        SettingsManagerTest.Instance.SetOverride("inputBindings", "inputActionOverridesJson", json);
+        SettingsManagerTest.Instance.Save();
     }
 }
+

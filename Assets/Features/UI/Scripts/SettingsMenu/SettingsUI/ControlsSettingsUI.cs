@@ -2,31 +2,29 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 public class ControlsSettingsUI : MonoBehaviour
 {
-    [Header("Param Setup")]
-    public SettingsCategory kbmCategory;
-    public SettingsCategory gamepadCategory;
-
+    [Header("UI Prefabs")]
     public GameObject paramSliderPrefab;
     public GameObject paramTogglePrefab;
     public GameObject paramDropdownPrefab;
     public GameObject separatorPrefab;
-    
-    public GameObject keyboardPanel;
-    public GameObject gamepadPanel;
-    
     public GameObject paramRebindPrefab;
 
+    [Header("UI Panels")]
+    public GameObject keyboardPanel;
+    public GameObject gamepadPanel;
+
     private InputActionAsset inputActions;
-    private SettingsData settingsData;
 
     private void Start()
     {
         inputActions = GlobalConfigs.Input.inputActions;
 
-        var json = SettingsManager.Instance.GetSettingsData().inputBindings.inputActionOverridesJson;
+        // Load binding overrides if any
+        var json = SettingsManagerTest.Instance.GetSetting<string>("inputBindings", "inputActionOverridesJson");
         if (!string.IsNullOrEmpty(json))
         {
             inputActions.LoadBindingOverridesFromJson(json);
@@ -37,72 +35,104 @@ public class ControlsSettingsUI : MonoBehaviour
             Debug.LogWarning("[ControlsSettingsUI] No binding overrides found. Will use InputActionAsset defaults.");
         }
 
-        settingsData = SettingsManager.Instance.GetSettingsData();
-
-        GenerateParams(kbmCategory, keyboardPanel.transform);
+        GenerateUI("kbm", keyboardPanel.transform);
         Instantiate(separatorPrefab, keyboardPanel.transform);
-        GenerateUI("Keyboard&Mouse", keyboardPanel);
-    
-        GenerateParams(gamepadCategory, gamepadPanel.transform);
+        GenerateRebinds("Keyboard&Mouse", keyboardPanel);
+
+        GenerateUI("gamepad", gamepadPanel.transform);
         Instantiate(separatorPrefab, gamepadPanel.transform);
-        GenerateUI("Gamepad", gamepadPanel);
+        GenerateRebinds("Gamepad", gamepadPanel);
     }
 
-    // Generates the UI for the ControlsParam
-    private void GenerateParams(SettingsCategory category, Transform targetPanel)
+    private void GenerateUI(string category, Transform targetPanel)
     {
-        foreach (var param in category.parameters)
+        JObject metadata = SettingsManagerTest.Instance.GetMetadataSettings()?[category] as JObject;
+
+        if (metadata == null)
         {
-            switch (param.type)
+            Debug.LogError($"[ControlsSettingsUI] Metadata not found or invalid for category '{category}'.");
+            return;
+        }
+
+        foreach (var pair in metadata)
+        {
+            string key = pair.Key;
+            JObject param = pair.Value as JObject;
+            if (param == null) continue;
+
+            string type = param["type"]?.ToString();
+            string label = param["label"]?.ToString() ?? key;
+
+            switch (type)
             {
-                case ParamType.Slider:
-                    float floatValue = (float)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
-                    var s = Instantiate(paramSliderPrefab, targetPanel);
-                    s.GetComponent<ParamSlider>().Setup(
-                        param.label,
-                        floatValue,
-                        value => {
-                            ReflectionUtils.SetValueByPath(settingsData, param.key, value);
-                            ApplyAndSave();
-                        },
-                        param.showDecimal,
-                        param.minValue,
-                        param.maxValue
-                    );
+                case "slider":
+                    float sliderValue = SettingsManagerTest.Instance.GetSetting<float>(category, key);
+                    CreateSlider(param, key, sliderValue, category, targetPanel);
                     break;
 
-                case ParamType.Toggle:
-                    bool boolValue = (bool)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
-                    var t = Instantiate(paramTogglePrefab, targetPanel);
-                    t.GetComponent<ParamToggle>().Setup(
-                        param.label,
-                        boolValue,
-                        value => {
-                            ReflectionUtils.SetValueByPath(settingsData, param.propertyPath, value);
-                            ApplyAndSave();
-                        }
-                    );
+                case "toggle":
+                    bool toggleValue = SettingsManagerTest.Instance.GetSetting<bool>(category, key);
+                    CreateToggle(param, key, toggleValue, category, targetPanel);
                     break;
 
-                case ParamType.Dropdown:
-                    int intValue = (int)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
-                    var d = Instantiate(paramDropdownPrefab, targetPanel);
-                    d.GetComponent<ParamDropdown>().Setup(
-                        param.label,
-                        param.dropdownOptions,
-                        intValue,
-                        value => {
-                            ReflectionUtils.SetValueByPath(settingsData, param.key, value);
-                            ApplyAndSave();
-                        }
-                    );
+                case "dropdown":
+                    string dropdownValue = SettingsManagerTest.Instance.GetSetting<string>(category, key);
+                    CreateDropdown(param, key, dropdownValue, category, targetPanel);
+                    break;
+
+                default:
+                    Debug.LogWarning($"[ControlsSettingsUI] Unknown type '{type}' for setting '{key}' in category '{category}'.");
                     break;
             }
         }
     }
 
-    // Generates the UI for rebinding
-    void GenerateUI(string deviceGroup, GameObject targetPanel)
+    private void CreateSlider(JObject param, string key, float currentValue, string category, Transform targetPanel)
+    {
+        var go = Instantiate(paramSliderPrefab, targetPanel);
+        var slider = go.GetComponent<ParamSlider>();
+        slider.Setup(
+            param["label"]?.ToString(),
+            currentValue,
+            value =>
+            {
+                SettingsManagerTest.Instance.SetOverride(category, key, value);
+                ApplyAndSave();
+            },
+            param["decimal"]?.Value<bool>() ?? false,
+            param["min"]?.Value<float>() ?? 0,
+            param["max"]?.Value<float>() ?? 100
+        );
+    }
+
+    private void CreateToggle(JObject param, string key, bool currentValue, string category, Transform targetPanel)
+    {
+        var go = Instantiate(paramTogglePrefab, targetPanel);
+        var toggle = go.GetComponent<ParamToggle>();
+        toggle.Setup(param["label"]?.ToString(), currentValue, value =>
+        {
+            SettingsManagerTest.Instance.SetOverride(category, key, value);
+            ApplyAndSave();
+        });
+    }
+
+    private void CreateDropdown(JObject param, string key, string currentValue, string category, Transform targetPanel)
+    {
+        var go = Instantiate(paramDropdownPrefab, targetPanel);
+        var dropdown = go.GetComponent<ParamDropdown>();
+        var options = param["options"].ToObject<string[]>();
+
+        int selectedIndex = System.Array.IndexOf(options, currentValue);
+
+        dropdown.Setup(param["label"]?.ToString(), options, selectedIndex, index =>
+        {
+            string selected = options[index];
+            SettingsManagerTest.Instance.SetOverride(category, key, selected);
+            ApplyAndSave();
+        });
+    }
+
+    private void GenerateRebinds(string deviceGroup, GameObject targetPanel)
     {
         foreach (var map in inputActions.actionMaps)
         {
@@ -112,8 +142,7 @@ public class ControlsSettingsUI : MonoBehaviour
             {
                 // Filtres
                 if (action.name == "Look") continue;
-                if (deviceGroup == "Gamepad" && action.name == "Move")
-                    continue;
+                if (deviceGroup == "Gamepad" && action.name == "Move") continue;
 
                 if (action.bindings.Any(b => b.isComposite))
                 {
@@ -141,39 +170,37 @@ public class ControlsSettingsUI : MonoBehaviour
         }
     }
 
-    // Generates the UI for rebinding (composite)
     private void GenerateCompositeBindings(InputAction action, string deviceGroup, GameObject targetPanel)
     {
         for (int i = 0; i < action.bindings.Count; i++)
         {
             var binding = action.bindings[i];
             if (!binding.isComposite) continue;
-    
+
             i++; // go to the first partOfComposite
-    
+
             Dictionary<string, List<int>> compositeParts = new();
-            
+
             while (i < action.bindings.Count && action.bindings[i].isPartOfComposite)
             {
                 var sub = action.bindings[i];
                 if (!sub.groups.Contains(deviceGroup)) { i++; continue; }
-    
+
                 if (!compositeParts.ContainsKey(sub.name))
                     compositeParts[sub.name] = new List<int>();
-    
+
                 compositeParts[sub.name].Add(i);
-    
                 i++;
             }
-    
+
             i--; // Fix the index after reading all partOfComposite
-    
+
             // instantiates 1 prefab per direction
             foreach (var kvp in compositeParts)
             {
                 string direction = kvp.Key;
                 var indices = kvp.Value;
-    
+
                 var go = Instantiate(paramRebindPrefab, targetPanel.transform);
                 var paramRebind = go.GetComponent<ParamRebind>();
                 paramRebind.actionMap = action.actionMap.name;
@@ -187,7 +214,7 @@ public class ControlsSettingsUI : MonoBehaviour
 
     private void ApplyAndSave()
     {
-        SettingsManager.Instance.Save();
-        SettingsManager.Instance.ApplySettings();
+        SettingsManagerTest.Instance.Save();
+        SettingsManagerTest.Instance.ApplySettings();
     }
 }
