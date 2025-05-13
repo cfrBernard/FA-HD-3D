@@ -24,7 +24,7 @@ public class ControlsSettingsUI : MonoBehaviour
         inputActions = GlobalConfigs.Input.inputActions;
 
         // Load binding overrides if any
-        var json = SettingsManagerTest.Instance.GetSetting<string>("inputBindings", "inputActionOverridesJson");
+        var json = SettingsManager.Instance.GetSetting<string>("inputBindings", "inputActionOverridesJson");
         if (!string.IsNullOrEmpty(json))
         {
             inputActions.LoadBindingOverridesFromJson(json);
@@ -46,7 +46,7 @@ public class ControlsSettingsUI : MonoBehaviour
 
     private void GenerateUI(string category, Transform targetPanel)
     {
-        JObject metadata = SettingsManagerTest.Instance.GetMetadataSettings()?[category] as JObject;
+        JObject metadata = SettingsManager.Instance.GetMetadataSettings()?[category] as JObject;
 
         if (metadata == null)
         {
@@ -66,17 +66,17 @@ public class ControlsSettingsUI : MonoBehaviour
             switch (type)
             {
                 case "slider":
-                    float sliderValue = SettingsManagerTest.Instance.GetSetting<float>(category, key);
+                    float sliderValue = SettingsManager.Instance.GetSetting<float>(category, key);
                     CreateSlider(param, key, sliderValue, category, targetPanel);
                     break;
 
                 case "toggle":
-                    bool toggleValue = SettingsManagerTest.Instance.GetSetting<bool>(category, key);
+                    bool toggleValue = SettingsManager.Instance.GetSetting<bool>(category, key);
                     CreateToggle(param, key, toggleValue, category, targetPanel);
                     break;
 
                 case "dropdown":
-                    string dropdownValue = SettingsManagerTest.Instance.GetSetting<string>(category, key);
+                    string dropdownValue = SettingsManager.Instance.GetSetting<string>(category, key);
                     CreateDropdown(param, key, dropdownValue, category, targetPanel);
                     break;
 
@@ -96,7 +96,7 @@ public class ControlsSettingsUI : MonoBehaviour
             currentValue,
             value =>
             {
-                SettingsManagerTest.Instance.SetOverride(category, key, value);
+                SettingsManager.Instance.SetOverride(category, key, value);
                 ApplyAndSave();
             },
             param["decimal"]?.Value<bool>() ?? false,
@@ -111,7 +111,7 @@ public class ControlsSettingsUI : MonoBehaviour
         var toggle = go.GetComponent<ParamToggle>();
         toggle.Setup(param["label"]?.ToString(), currentValue, value =>
         {
-            SettingsManagerTest.Instance.SetOverride(category, key, value);
+            SettingsManager.Instance.SetOverride(category, key, value);
             ApplyAndSave();
         });
     }
@@ -127,7 +127,7 @@ public class ControlsSettingsUI : MonoBehaviour
         dropdown.Setup(param["label"]?.ToString(), options, selectedIndex, index =>
         {
             string selected = options[index];
-            SettingsManagerTest.Instance.SetOverride(category, key, selected);
+            SettingsManager.Instance.SetOverride(category, key, selected);
             ApplyAndSave();
         });
     }
@@ -214,7 +214,7 @@ public class ControlsSettingsUI : MonoBehaviour
 
     private void ApplyAndSave()
     {
-        SettingsManagerTest.Instance.Save();
-        SettingsManagerTest.Instance.ApplySettings();
+        SettingsManager.Instance.Save();
+        SettingsManager.Instance.ApplySettings();
     }
 }

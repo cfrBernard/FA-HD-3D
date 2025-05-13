@@ -1,10 +1,12 @@
-using UnityEngine;
 using System.IO;
+using Newtonsoft.Json.Linq;
+using UnityEngine;
 
-public class SaveManager : MonoBehaviour 
+public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
-    private static string SavePath => Path.Combine(Application.persistentDataPath, "settings.json");
+
+    private static string UserSettingsPath;
 
     private void Awake()
     {
@@ -12,6 +14,8 @@ public class SaveManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            UserSettingsPath = Path.Combine(Application.persistentDataPath, "UserSettings.json");
         }
         else
         {
@@ -19,22 +23,22 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public static void SaveSettings(SettingsData data)
+    public static void SaveSettings(JObject userData)
     {
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(SavePath, json);
-        Debug.Log($"[SaveManager] Settings saved to {SavePath}");
+        string json = userData.ToString();
+        File.WriteAllText(UserSettingsPath, json);
+        Debug.Log($"[SaveManager] Saved user settings to {UserSettingsPath}");
     }
 
-    public static SettingsData LoadSettings()
+    public static JObject LoadSettings()
     {
-        if (!File.Exists(SavePath))
+        if (!File.Exists(UserSettingsPath))
         {
-            Debug.Log("[SaveManager] No save file found, using default settings.");
-            return null;
+            Debug.LogWarning("[SaveManager] No user settings found.");
+            return new JObject();
         }
 
-        string json = File.ReadAllText(SavePath);
-        return JsonUtility.FromJson<SettingsData>(json);
+        string json = File.ReadAllText(UserSettingsPath);
+        return JObject.Parse(json);
     }
 }

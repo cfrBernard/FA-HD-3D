@@ -25,10 +25,10 @@ public class VideoManager : MonoBehaviour
 
     public void ApplyVideoSettings()
     {
-        string resolution = SettingsManagerTest.Instance.GetSetting<string>("video", "resolution");
-        bool fullscreen = SettingsManagerTest.Instance.GetSetting<bool>("video", "fullscreen");
-        string framerateStr = SettingsManagerTest.Instance.GetSetting<string>("video", "targetFramerate");
-        bool vsync = SettingsManagerTest.Instance.GetSetting<bool>("video", "vsync");
+        string resolution = SettingsManager.Instance.GetSetting<string>("video", "resolution");
+        bool fullscreen = SettingsManager.Instance.GetSetting<bool>("video", "fullscreen");
+        string framerateStr = SettingsManager.Instance.GetSetting<string>("video", "targetFramerate");
+        bool vsync = SettingsManager.Instance.GetSetting<bool>("video", "vsync");
 
         // Résolution
         string[] resParts = resolution.Split('x');
@@ -59,16 +59,16 @@ public class VideoManager : MonoBehaviour
 
     public void ApplyGraphicsSettings()
     {
-        string qualityPreset = SettingsManagerTest.Instance.GetSetting<string>("graphics", "qualityPreset");
-        string textureQuality = SettingsManagerTest.Instance.GetSetting<string>("graphics", "textureQuality");
-        string shadowQuality = SettingsManagerTest.Instance.GetSetting<string>("graphics", "shadowQuality");
-        string antiAliasing = SettingsManagerTest.Instance.GetSetting<string>("graphics", "antiAliasing");
+        string qualityPreset = SettingsManager.Instance.GetSetting<string>("graphics", "qualityPreset");
+        string textureQuality = SettingsManager.Instance.GetSetting<string>("graphics", "textureQuality");
+        string shadowQuality = SettingsManager.Instance.GetSetting<string>("graphics", "shadowQuality");
+        string antiAliasing = SettingsManager.Instance.GetSetting<string>("graphics", "antiAliasing");
 
-        bool postProcessing = SettingsManagerTest.Instance.GetSetting<bool>("graphics", "postProcessing");
-        bool ambientOcclusion = SettingsManagerTest.Instance.GetSetting<bool>("graphics", "ambientOcclusion");
-        bool motionBlur = SettingsManagerTest.Instance.GetSetting<bool>("graphics", "motionBlur");
-        bool bloom = SettingsManagerTest.Instance.GetSetting<bool>("graphics", "bloom");
-        bool depthOfField = SettingsManagerTest.Instance.GetSetting<bool>("graphics", "depthOfField");
+        bool postProcessing = SettingsManager.Instance.GetSetting<bool>("graphics", "postProcessing");
+        bool ambientOcclusion = SettingsManager.Instance.GetSetting<bool>("graphics", "ambientOcclusion");
+        bool motionBlur = SettingsManager.Instance.GetSetting<bool>("graphics", "motionBlur");
+        bool bloom = SettingsManager.Instance.GetSetting<bool>("graphics", "bloom");
+        bool depthOfField = SettingsManager.Instance.GetSetting<bool>("graphics", "depthOfField");
 
         // Qualité globale
         QualitySettings.SetQualityLevel(QualityPresetToIndex(qualityPreset), true);

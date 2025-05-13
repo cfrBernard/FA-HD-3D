@@ -27,11 +27,6 @@ public class BootScene : MonoBehaviour
     private ToolsManager toolsManager;
     private FPSDisplay _FPSDisplay;
 
-    // DATA REFACTOR TESTING =======================
-    private SettingsManagerTest settingsManagerTest;
-    private AudioManagerTest audioManagerTest;
-    // =============================================
-
     #region BootSequence
     private void Start()
     {
@@ -150,25 +145,6 @@ public class BootScene : MonoBehaviour
         }
         else
             _FPSDisplay = FPSDisplay.Instance;
-
-        
-        // DATA REFACTOR TESTING ===========================================================================
-        if (SettingsManagerTest.Instance == null)
-        {
-            settingsManagerTest = new GameObject("SettingsManagerTest").AddComponent<SettingsManagerTest>();
-            DontDestroyOnLoad(settingsManagerTest.gameObject);
-        }
-        else
-            settingsManagerTest = SettingsManagerTest.Instance;
-            
-        if (AudioManagerTest.Instance == null)
-        {
-            audioManagerTest = new GameObject("AudioManagerTest").AddComponent<AudioManagerTest>();
-            DontDestroyOnLoad(audioManagerTest.gameObject);
-        }
-        else
-            audioManagerTest = AudioManagerTest.Instance;
-        // =================================================================================================
     }
 
     // IEnumerator LoadPlayerPrefs() {}

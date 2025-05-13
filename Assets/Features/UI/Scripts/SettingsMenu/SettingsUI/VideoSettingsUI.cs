@@ -1,107 +1,108 @@
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 public class VideoSettingsUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    public SettingsCategory[] categoryAssets;
     public Transform contentPanel;
     public GameObject paramSliderPrefab;
     public GameObject paramTogglePrefab;
     public GameObject paramDropdownPrefab;
-    public GameObject separatorPrefab; // GraphicsSep (opti needed)
+    public GameObject separatorPrefab;
 
-    private SettingsData settingsData;
-
-    private void OnEnable() // start ? 
+    private void OnEnable()
     {
-        settingsData = SettingsManager.Instance.GetSettingsData();
-        GenerateUI();
+        GenerateUI("video");
+        Instantiate(separatorPrefab, contentPanel);
+        GenerateUI("graphics");
     }
 
-    private void GenerateUI()
+    private void GenerateUI(string category)
     {
-        for (int i = 0; i < categoryAssets.Length; i++)
-        {
-            var category = categoryAssets[i];
-            foreach (var param in category.parameters)
-            {
-                switch (param.type)
-                {
-                    case ParamType.Slider:
-                        HandleSlider(param);
-                        break;
-                    case ParamType.Toggle:
-                        HandleToggle(param);
-                        break;
-                    case ParamType.Dropdown:
-                        HandleDropdown(param);
-                        break;
-                }
-            }
+        JObject metadata = Resources.Load<TextAsset>("MetadataSettings") is TextAsset metaAsset
+            ? JObject.Parse(metaAsset.text)?[category] as JObject
+            : null;
 
-            if (i < categoryAssets.Length - 1 && separatorPrefab != null)
+        if (metadata == null)
+        {
+            Debug.LogError($"[VideoSettingsUI] Metadata not found or invalid for category '{category}'.");
+            return;
+        }
+
+        foreach (var pair in metadata)
+        {
+            string key = pair.Key;
+            JObject param = pair.Value as JObject;
+            if (param == null) continue;
+
+            string type = param["type"]?.ToString();
+            string label = param["label"]?.ToString() ?? key;
+
+            switch (type)
             {
-                Instantiate(separatorPrefab, contentPanel);
+                case "slider":
+                    float sliderValue = SettingsManager.Instance.GetSetting<float>(category, key);
+                    CreateSlider(param, key, sliderValue, category);
+                    break;
+
+                case "toggle":
+                    bool toggleValue = SettingsManager.Instance.GetSetting<bool>(category, key);
+                    CreateToggle(param, key, toggleValue, category);
+                    break;
+
+                case "dropdown":
+                    string dropdownValue = SettingsManager.Instance.GetSetting<string>(category, key);
+                    CreateDropdown(param, key, dropdownValue, category);
+                    break;
+
+                default:
+                    Debug.LogWarning($"[VideoSettingsUI] Unknown type '{type}' for setting '{key}' in category '{category}'.");
+                    break;
             }
         }
     }
 
-    private void HandleSlider(ParamDefinition param)
-    {
-        float currentValue = (float)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
-        CreateSlider(param, currentValue);
-    }
-
-    private void CreateSlider(ParamDefinition paramDef, float currentValue)
+    private void CreateSlider(JObject param, string key, float currentValue, string category)
     {
         var go = Instantiate(paramSliderPrefab, contentPanel);
         var slider = go.GetComponent<ParamSlider>();
-
         slider.Setup(
-            paramDef.label,
+            param["label"]?.ToString(),
             currentValue,
             value =>
             {
-                ReflectionUtils.SetValueByPath(settingsData, paramDef.key, value);
+                SettingsManager.Instance.SetOverride(category, key, value);
                 ApplyAndSave();
             },
-            paramDef.showDecimal,
-            paramDef.minValue,
-            paramDef.maxValue
+            param["decimal"]?.Value<bool>() ?? false,
+            param["min"]?.Value<float>() ?? 0,
+            param["max"]?.Value<float>() ?? 100
         );
     }
 
-    private void HandleToggle(ParamDefinition param)
-    {
-        bool currentValue = (bool)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
-        CreateGeneralToggle(param, currentValue);
-    }
-
-    private void CreateGeneralToggle(ParamDefinition param, bool currentValue)
+    private void CreateToggle(JObject param, string key, bool currentValue, string category)
     {
         var go = Instantiate(paramTogglePrefab, contentPanel);
         var toggle = go.GetComponent<ParamToggle>();
-        toggle.Setup(param.label, currentValue, value =>
+        toggle.Setup(param["label"]?.ToString(), currentValue, value =>
         {
-            ReflectionUtils.SetValueByPath(settingsData, param.propertyPath, value);
+            SettingsManager.Instance.SetOverride(category, key, value);
             ApplyAndSave();
         });
     }
 
-    private void HandleDropdown(ParamDefinition param)
-    {
-        int currentValue = (int)ReflectionUtils.GetValueByPath(settingsData, param.propertyPath);
-        CreateDropdown(param, currentValue);
-    }
-
-    private void CreateDropdown(ParamDefinition param, int currentValue)
+    private void CreateDropdown(JObject param, string key, string currentValue, string category)
     {
         var go = Instantiate(paramDropdownPrefab, contentPanel);
         var dropdown = go.GetComponent<ParamDropdown>();
+        var options = param["options"].ToObject<string[]>();
 
-        dropdown.Setup(param.label, param.dropdownOptions, currentValue, value =>
+        int selectedIndex = System.Array.IndexOf(options, currentValue);
+
+        dropdown.Setup(param["label"]?.ToString(), options, selectedIndex, index =>
         {
-            ReflectionUtils.SetValueByPath(settingsData, param.key, value);
+            string selected = options[index];
+            SettingsManager.Instance.SetOverride(category, key, selected);
             ApplyAndSave();
         });
     }
@@ -110,5 +111,5 @@ public class VideoSettingsUI : MonoBehaviour
     {
         SettingsManager.Instance.Save();
         SettingsManager.Instance.ApplySettings();
-    } 
+    }
 }

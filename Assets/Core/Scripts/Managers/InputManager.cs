@@ -20,11 +20,37 @@ public class InputManager : MonoBehaviour
         }
 
         inputActions = GlobalConfigs.Input.inputActions;
+
+        UpdateBindings();
     }
 
-    public void UpdateBindings(SettingsData data)
+    public void UpdateBindings()
     {
-        inputActions.LoadBindingOverridesFromJson(data.inputBindings.inputActionOverridesJson);
+        if (inputActions == null)
+        {
+            Debug.LogError("[InputManager] inputActions is null in UpdateBindings()!");
+            return;
+        }
+
+        string overridesJson = SettingsManager.Instance
+            .GetSetting<string>("inputBindings", "inputActionOverridesJson");
+
+        if (!string.IsNullOrWhiteSpace(overridesJson))
+        {
+            inputActions.LoadBindingOverridesFromJson(overridesJson);
+            Debug.Log("[InputManager] Binding overrides applied from JSON.");
+        }
+        else
+        {
+            Debug.LogWarning("[InputManager] No binding overrides found in settings.");
+        }
+    }
+
+    public void ResetAllBindings() // call by the SettingsManager Reset function
+    {
+        inputActions.RemoveAllBindingOverrides();
+        
+        Debug.Log("[InputManager] Bindings reset to default.");
     }
 
     public string GetBindingDisplay(string actionMap, string actionName, int bindingIndex)
@@ -40,10 +66,10 @@ public class InputManager : MonoBehaviour
         if (action == null) return;
         action.ApplyBindingOverride(bindingIndex, overridePath);
 
-        // Save the override in settings via SettingsManagerTest
+        // Save the override via SettingsManager
         string json = inputActions.SaveBindingOverridesAsJson();
-        SettingsManagerTest.Instance.SetOverride("inputBindings", "inputActionOverridesJson", json);
-        SettingsManagerTest.Instance.Save();
+        SettingsManager.Instance.SetOverride("inputBindings", "inputActionOverridesJson", json);
+        SettingsManager.Instance.Save();
     }
 }
 

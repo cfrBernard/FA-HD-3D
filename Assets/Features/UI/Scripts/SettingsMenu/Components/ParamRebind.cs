@@ -81,8 +81,8 @@ public class ParamRebind : MonoBehaviour
     {
         var json = GlobalConfigs.Input.inputActions.SaveBindingOverridesAsJson();
         // Change the saving process to use SetOverride
-        SettingsManagerTest.Instance.SetOverride("inputBindings", "inputActionOverridesJson", json);
-        SettingsManagerTest.Instance.Save();
+        SettingsManager.Instance.SetOverride("inputBindings", "inputActionOverridesJson", json);
+        SettingsManager.Instance.Save();
         action.Enable();
     }
 }
